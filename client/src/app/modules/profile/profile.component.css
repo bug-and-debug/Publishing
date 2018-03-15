@@ -1,0 +1,86 @@
+.profile-container {
+  /* margin-top: 30px;
+  margin-left: 30px; */
+  margin: 40px auto;
+  max-width: 1050px;
+}
+
+.social md-grid-list {
+  max-width: 1050px;
+  margin-top: 10px;
+}
+
+.mine md-grid-list {
+  max-width: 1050px;
+  margin-top: 10px;
+}
+
+md-card {
+  max-width: 100%;
+  padding: 0;
+  background-color: #e0e0e0b0;
+}
+
+md-card-title {
+  padding-top: 20px;
+  padding-left: 10px;
+  font: bold 14px sans-serif;
+}
+
+.divider {
+  height: 1px;
+  background-color: #2b2b2b1a;
+  margin: 0 15px 0 15px;
+}
+
+.profile-container > div {
+  margin-bottom: 40px;
+}
+
+md-grid-tile {
+  font:  18px Roboto;
+}
+
+md-grid-tile span {
+  position: absolute;
+    left: 10px;
+}
+
+ md-grid-tile .title {
+  position: absolute;
+    left: 40px;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  position: absolute;
+  left: 10px;
+}
+
+.save-btn {
+  position: absolute;
+  right: 30px;
+  bottom: 25px;
+}
+
+.form-input > * {
+  width: 100%;
+}
+
+.gender, .age {
+  position: absolute;
+  left: 10px;
+  width: 80%;
+}
+
+.disconnect {
+  text-decoration: underline;
+  font: 15px sans-serif;
+  cursor: pointer;
+}
+
+.disconnect:hover {
+  color: #3b5998;
+}

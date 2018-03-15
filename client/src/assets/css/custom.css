@@ -1,0 +1,93 @@
+body {
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+	margin: 0px;
+}
+.pointer {
+  cursor: pointer;
+}
+
+.clear {
+	clear: both;
+}
+
+.pull-left {
+	float: left;
+}
+
+.pull-right {
+	float: right;	
+}
+
+
+.mat-toolbar {
+	height: 48px;
+	min-height: 48px;
+}
+
+.mat-toolbar .mat-toolbar-row {
+	height: 48px;
+}
+
+/* D3 related */
+svg.d3SvgContainer {
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+svg.d3SvgContainer .articleRect {
+	border: 2px solid #c2c5c7;
+}
+
+svg.d3SvgContainer .articleImage {
+
+}
+
+svg.d3SvgContainer .articleTitle {
+	font-size: 15px;
+	fill: #238fce;
+}
+
+svg.d3SvgContainer .articleBody {
+	font-size: 13px;
+	fill: #737373;
+}
+
+svg.d3SvgContainer .articleSiteImage {
+	width: 25px;
+	height: 25px;
+}
+
+svg.d3SvgContainer .articleSiteTitle {
+	font-weight: bold;
+	font-size: 12px;
+	fill: #333;
+}
+
+svg.d3SvgContainer .articleTime {
+	font-size: 12px;
+	font-weight: bold;
+	fill: #737373;
+}
+
+svg.d3SvgContainer .articleEdit {
+	fill: #2a6ba3;
+	font-size: 13px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+svg.d3SvgContainer .articleMenu {
+	font-size: 24px;
+	fill: #737373;
+}
+
+
+.user-avatar-small img {
+	width: 32px;
+	height: 32px;
+	border-radius: 18px;
+	border: 2px solid #ccc;
+}
+
+.ng2-dropdown-menu {
+	z-index: 9999 !important;
+}

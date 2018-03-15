@@ -1,0 +1,109 @@
+
+.search {
+  position: relative;
+  margin: auto;
+  color: black;
+  width: 35%;
+  height: 40px;
+  border-radius: 5px;
+}
+
+/* menu bar color : 241; */
+
+.search-text {
+  position: relative;
+  float: left;
+  color: black;
+  background: rgb(224, 224, 224);
+  width: 100%;
+  outline: none;
+  border: 0;
+  border-radius: 4px;
+  padding: 5px;
+  padding-left: 35px;
+  padding-right: 35px;
+}
+.search-icon {
+  font-size: 33px;
+  position: absolute;
+  z-index: 1;
+  padding:4px;
+  color: rgb(8, 80, 193);
+  cursor: pointer;
+  float: left;
+}
+.clear-search {
+  font-size: 20px;
+  position: absolute;
+  z-index: 1;
+  cursor: pointer;
+  /*padding: 8px;
+  float: right;*/
+  right: 10px !important;
+  color: rgb(8, 80, 193);
+  font-size: 33px;
+  right: 5px;
+  top: 3px;
+}
+
+.title-bar {
+  padding: 0px;
+  background: rgb(241, 241, 241) !important;
+  height: 48px;
+  min-height: 48px;
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+
+.md-menu {
+  color: black;
+  padding: 0 21px;
+  cursor: pointer;
+  display: inline-flex;
+}
+.md-filter {
+  color: black;
+  cursor: pointer;
+  display: inline-flex;
+}
+
+.md-more {
+  color: black;
+  padding: 0 21px;
+  cursor: pointer;
+  display: inline-flex;
+}
+
+
+.filter-panel-container {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  z-index: 100;
+}
+
+.filter-panel-container .mat-card-title {
+  font-size: 18px;
+}
+
+.filter-panel-container .filter-item {
+  width: 25%;
+  float: left;
+}
+
+.filter-panel-container .status-view {
+  width: 100%;
+}
+
+.filter-panel-container .action-container {
+  /*position: absolute;*/
+  /*left: 0;
+  right: 0;
+  bottom: 10px;*/
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}

@@ -1,0 +1,17 @@
+.title {
+  text-align: center;
+  font-size: 24px;
+}
+
+.content {
+  margin: 0px auto;
+	height: 33%;
+}
+
+.ok-button {
+	float: right;
+}
+
+.cancel-button {
+
+}

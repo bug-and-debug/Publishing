@@ -1,0 +1,25 @@
+<div style="position:relative;width:100%;height:100%;">
+  <h3 class="title">
+    Select a {{group}} value
+    <span class="pointer pull-right" (click)="closeDialog(value)"><md-icon>close</md-icon></span>
+  </h3>
+  <div style="margin-top:20px;margin-bottom: 20px;text-align: right;">
+    <a>Suggest a new value</a>
+  </div>
+  <div class="form-field-row">
+    <tag-input [(ngModel)]="value"
+       [onlyFromAutocomplete]="true"
+       placeholder="Type to search"
+       secondaryPlaceholder="Select"
+       (onRemove)="onItemRemoved($event)"
+       (onAdd)="onItemAdded($event)"
+       [maxItems]="limit">
+        <tag-input-dropdown [autocompleteItems]="groups" [limitItemsTo]="5">
+        </tag-input-dropdown>
+    </tag-input>
+  </div>
+
+  <div style="position: absolute;left:0;bottom:0;right:0;">
+    <button md-button class="pull-right" aria-label="Select" (click)="closeDialog(value)">Finished</button>
+  </div>
+</div>

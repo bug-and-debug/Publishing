@@ -1,0 +1,14 @@
+<layout-toolbar [filter]="query" [pageId]="pageId" (onFilterChanged)="onFilterChanged(filter)"></layout-toolbar>
+
+<div class="column" (window:resize)="onResize($event)">
+	<div id="svg" [style.width.px]="svgSize.width" [style.height.px]="svgSize.height" (click)='toggleOffAll()'>
+	</div>
+</div>
+<button md-fab class="add-btn" mdTooltip="Add article" mdTooltipPosition="left" (click)="addArticle()" color="primary"><md-icon>add</md-icon></button>
+<button md-fab class="ads-btn btn-left-margin" mdTooltip="Adsense" mdTooltipPosition="right" (click)="toggleSocial()" color="primary">Ads</button>
+<div class='social-btn' [hidden]="!showSocialMenu">
+  <a href="#" mdTooltip="Facebook" mdTooltipPosition="right" class="fa fa-facebook"></a>
+  <a href="#" mdTooltip="Twitter" mdTooltipPosition="right" class="fa fa-twitter"></a>
+  <a href="#" mdTooltip="Google" mdTooltipPosition="right" class="fa fa-google"></a>
+  <a href="#" mdTooltip="Linkedin" mdTooltipPosition="right" class="fa fa-linkedin"></a>
+</div>

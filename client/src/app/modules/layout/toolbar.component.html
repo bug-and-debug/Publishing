@@ -1,0 +1,94 @@
+<md-toolbar color="primary" class="title-bar">
+  <span class="md-menu"><md-icon>dehaze</md-icon></span>
+  <div class="search" >
+    <md-icon class="search-icon" mdTooltip="Search" mdTooltipPosition="below">search</md-icon>
+    <input type="text" class="search-text" placeholder="Search" [(ngModel)]="filter.search" (ngModelChange)='onQuerySearchTextChanged($event)' name='search' #search >
+    <span [hidden]="filter.search == ''"><md-icon class="clear-search" (click)="clearSearch()" mdTooltip="Clear search" mdTooltipPosition="below">clear</md-icon></span>
+  </div>
+  <div class="pull-right">
+    <span class="pointer md-filter" (click)="onToggleFilterPanel()"><md-icon>filter_list</md-icon></span>
+    <span class="pointer md-more" [matMenuTriggerFor]="menuLanding" *ngIf="pageId == 'PAGE_LANDING'"><md-icon>more_horiz</md-icon></span>
+    <span class="pointer md-more" [matMenuTriggerFor]="menuProfile" *ngIf="pageId == 'PAGE_PROFILE'"><md-icon>more_horiz</md-icon></span>
+  </div>
+
+  <md-menu #menuLanding="matMenu">
+    <button mat-menu-item (click)="copyLink()">Copy Link</button>
+    <button mat-menu-item (click)="sharePage()">Share Page</button>
+  </md-menu>
+
+  <md-menu #menuProfile="matMenu">
+    <button mat-menu-item (click)="showBookmarks()">Show Bookmarks</button>
+    <button mat-menu-item (click)="showPosts()">Show My Posts</button>
+  </md-menu>
+
+</md-toolbar>
+
+<div class="filter-panel-container" *ngIf="showFilterPanel">
+  <div class="action-container">
+    <button md-button class="pull-left" (click)="resetFilters()">Reset Filters</button>
+    <button md-button class="pull-right" (click)="applyFilters()">Apply Filters</button>
+    <button md-button class="pull-right" (click)="onToggleFilterPanel()">Cancel</button>
+  </div>
+  <div class="clear"></div>
+  <div class="filter-item filter-groups" *ngFor="let g of ['g11', 'g12', 'g13']">
+    <md-card>
+      <md-card-header>
+        <md-card-title *ngIf="g == 'g11'">Select Theme</md-card-title>
+        <md-card-title *ngIf="g == 'g12'">Select group12</md-card-title>
+        <md-card-title *ngIf="g == 'g13'">Select group13</md-card-title>
+      </md-card-header>
+      <md-card-content>
+        <tag-input [(ngModel)]="filterTemp[g]"
+           [onlyFromAutocomplete]="true"
+           placeholder="Type to search"
+           secondaryPlaceholder="Select">
+            <tag-input-dropdown [autocompleteItems]="groupSet[g]" [limitItemsTo]="5" [showDropdownIfEmpty]="true">
+            </tag-input-dropdown>
+        </tag-input>
+      </md-card-content>
+    </md-card>
+  </div>
+  <div class="filter-item filter-others">
+    <md-card>
+      <md-card-header>
+        <md-card-title>Select Date Range</md-card-title>
+      </md-card-header>
+      <md-card-content>
+        <md-form-field>
+          <input mdInput [mdDatepicker]="pickerStart" placeholder="From Date" [(ngModel)]="filterTemp.periodStart">
+          <md-datepicker-toggle mdSuffix [for]="pickerStart"></md-datepicker-toggle>
+          <md-datepicker #pickerStart startView="year"></md-datepicker>
+        </md-form-field>
+        <md-form-field>
+          <input mdInput [mdDatepicker]="pickerEnd" placeholder="To Date" [(ngModel)]="filterTemp.periodEnd">
+          <md-datepicker-toggle mdSuffix [for]="pickerEnd"></md-datepicker-toggle>
+          <md-datepicker #pickerEnd startView="year"></md-datepicker>
+        </md-form-field>
+      </md-card-content>
+    </md-card>
+    <md-card>
+      <md-card-header>
+        <md-card-title>Sort By</md-card-title>
+      </md-card-header>
+      <md-card-content>
+        <md-select placeholder="Views" name="views"  class="status-view" [(ngModel)]="filterTemp.views">
+          <md-option *ngFor="let status of filterViewsOptions" [value]="status.value">
+            {{status.title}}
+          </md-option>
+        </md-select>
+      </md-card-content>
+    </md-card>
+    <md-card>
+      <md-card-header>
+        <md-card-title>State View</md-card-title>
+        <md-slide-toggle
+          class=" pull-right"
+          [color]="stateTriggerOptions.slideColor"
+          [checked]="filterTemp.stateView"
+          [disabled]="stateTriggerOptions.disabled"
+          (change)="onStateViewChanges($event.checked)">
+        </md-slide-toggle>
+      </md-card-header>
+    </md-card>
+  </div>
+</div>

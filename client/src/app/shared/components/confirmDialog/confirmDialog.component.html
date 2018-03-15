@@ -1,0 +1,10 @@
+<div>
+  <h1 md-dialog-title class="title">{{data.title}}</h1>
+</div>
+<div md-dialog-content class="content">
+  <p>{{data.subject}}</p>
+</div>
+<div md-dialog-actions style="display: block;">
+  <button md-button  class="cancel-button" (click)="onClose()">{{data.cancelButton}}</button>
+  <button md-button  class="ok-button" cdkFocusInitial (click)="onLogin()">{{data.okButton}}</button>
+</div>

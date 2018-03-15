@@ -1,0 +1,8 @@
+<md-form-field class="form-field-row">
+	<input type="text" placeholder="{{ placeholder }}" aria-label="Number" mdInput [formControl]="myControl" [mdAutocomplete]="auto">
+	<md-autocomplete #auto="mdAutocomplete">
+	  <md-option *ngFor="let item of filteredGroups | async" [value]="item.name" (onSelectionChange)="selected($event, item)" >
+	    {{ item.name }}
+	  </md-option>
+	</md-autocomplete>
+</md-form-field>

@@ -1,0 +1,39 @@
+<md-toolbar class="md-elevation-z3">
+  <span class="logo-span" ><i class="material-icons user logo">stars</i><span class="title">{{title}}</span></span>
+  <span class="page-title">{{pageTitle}}</span>
+  <span class="menu-span" style="float:right;" >
+    <span *ngIf="currentUser == null"><i class="material-icons user pointer" (click)="showLogin(!bShowLoginPopup)">account_circle</i></span>
+    <span *ngIf="currentUser != null" [mdMenuTriggerFor]="menu" class="user-avatar-small pointer"><img src="{{ currentUser.photo }}" /></span>
+    <span><i class="material-icons user pointer">help_outline</i></span>
+  </span>
+</md-toolbar>
+
+<md-menu #menu="mdMenu">
+  <span *ngIf="currentUser !=null" class="menu-header">{{currentUser.alias}}</span>
+  <button md-menu-item (click)="myProfile()">
+    <md-icon>dialpad</md-icon>
+    My Profile
+  </button>
+  <button md-menu-item (click)="myPosts()">
+    <md-icon>dialpad</md-icon>
+    My Posts
+  </button>
+  <button md-menu-item>
+    <md-icon>help</md-icon>
+    Help
+  </button>
+  <button md-menu-item (click)="logout()">
+    <md-icon>notifications_off</md-icon>
+    <span>Sign out</span>
+  </button>
+</md-menu>
+
+<div class="login-popup-container" *ngIf="bShowLoginPopup">
+  <div class="overlay" (click)="showLogin(false)"></div>
+  <div class="popup">
+    <h3 class="title">Choose how you want to proceed:</h3>
+    <button md-button class="button-login-twitter" (click)="login('TWITTER')">CONTINUE WITH TWITTER</button>
+    <button md-button class="button-login-facebook" (click)="login('FACEBOOK')">CONTINUE WITH FACEBOOK</button>
+    <button md-button class="button-login-google" (click)="login('GOOGLE')">CONTINUE WITH GOOGLE</button>
+  </div>
+</div>

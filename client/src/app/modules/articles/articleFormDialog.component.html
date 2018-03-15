@@ -1,0 +1,108 @@
+
+<!-- <h1 class="title">Add Article</h1> -->
+<div class="content">
+<!-- <form class="article-form"> -->
+	<div class="title" *ngIf="node == null">Add Article</div>
+	<div class="title" *ngIf="node != null">Add your Opinion</div>
+	<div class="article-content" *ngIf="node != null">
+		<div  class="articleImage"><img src="{{ node.imageLink }}" /></div>
+		<div class="articleContents">
+			<a href="{{node.articleLink}}" target="_blank" class="articleTitle">{{ node.title.substring(0, 60) }}</a>
+			<div class="articleBody">{{ node.body.substring(0, 120) + "..." }}</div>
+		</div>
+	</div>
+	<div class="article-content" *ngIf="node == null && articleInfo.valid">
+		<div  class="articleImage"><img src="{{ articleInfo.imageLink }}" /></div>
+		<div class="articleContents">
+    	<span class="btn-reset" (click)="resetLink()"><md-icon>close</md-icon></span>
+			<a href="{{articleInfo.articleLink}}" target="_blank" class="articleTitle">{{ articleInfo.title.substring(0, 60) }}</a>
+			<div class="articleBody">{{ articleInfo.body.substring(0, 120) + "..." }}</div>
+		</div>
+	</div>
+	<div class="article-content-new" *ngIf="node == null && !articleInfo.valid">
+		<md-form-field class="link-box form-field-row">
+			<input mdInput maxlength="256" placeholder="Paste Article link here and press Enter" [(ngModel)]="url"  (blur)='onArticleLinkChanged($event)' (keydown.enter)='onArticleLinkChanged($event)' required >
+		</md-form-field>
+	</div>
+	<div  style="margin-top:20px;"></div>
+	<md-form-field class="form-field-row" *ngIf="node == null || isArticleOwner">
+    <!-- <md-chip-list #group11 (click)="onAddChipToGroup($event, 'g11', 1)">
+		  <md-chip *ngFor="let groupName of groups.g11" (remove)="remove(groupName, 'g11')">
+	      {{groupName}}
+	      <md-icon mdChipRemove>cancel</md-icon>
+	    </md-chip>
+	    <input placeholder="g11"
+	       [mdChipInputFor]="group11"
+	       readonly="readonly" />
+    </md-chip-list> -->
+    <textarea mdInput placeholder="g11" rows="2" readonly="readonly" (click)="onAddChipToGroup($event, 'g11', 1)">{{ groups.g11.length > 0 ? groups.g11[0].name : ''}}</textarea>
+	</md-form-field>
+	<md-form-field class="form-field-row">
+    <md-chip-list #g1 (click)="onAddChipToGroup($event, 'g1', 2)">
+		  <md-chip *ngFor="let group of groups.g1" (remove)="remove(group.name, 'g1')">
+	      {{group.name}}
+	      <md-icon mdChipRemove>cancel</md-icon>
+	    </md-chip>
+	    <input placeholder="g1"
+       [mdChipInputFor]="g1"
+       readonly="readonly" />
+    </md-chip-list>
+	</md-form-field>
+	<md-form-field class="form-field-row">
+    <!-- <md-chip-list #group2 (click)="onAddChipToGroup($event, 'g2', 1)">
+		  <md-chip *ngFor="let groupName of groups.g2" (remove)="remove(groupName, 'g2')">
+	      {{groupName}}
+	      <md-icon mdChipRemove>cancel</md-icon>
+	    </md-chip>
+	    <input placeholder="g2"
+	       [mdChipInputFor]="group2"
+	       readonly="readonly" />
+    </md-chip-list> -->
+    <textarea mdInput placeholder="g2" rows="2" readonly="readonly" (click)="onAddChipToGroup($event, 'g2', 1)">{{ groups.g2.length > 0 ? groups.g2[0].name : ''}}</textarea>
+	</md-form-field>
+	<md-form-field class="form-field-row">
+    <md-chip-list #group3 (click)="onAddChipToGroup($event, 'g3', 2)">
+		  <md-chip *ngFor="let group of groups.g3" (remove)="remove(group.name, 'g3')">
+	      {{group.name}}
+	      <md-icon mdChipRemove>cancel</md-icon>
+	    </md-chip>
+	    <input placeholder="g3"
+	       [mdChipInputFor]="group3"
+	       readonly="readonly" />
+    </md-chip-list>
+	</md-form-field>
+	<md-form-field class="form-field-row">
+    <!-- <md-chip-list #group4 (click)="onAddChipToGroup($event, 'g4', 1)">
+		  <md-chip *ngFor="let groupName of groups.g4" (remove)="remove(groupName, 'g4')">
+	      {{groupName}}
+	      <md-icon mdChipRemove>cancel</md-icon>
+	    </md-chip>
+	    <input placeholder="g4"
+       [mdChipInputFor]="group4"
+       readonly="readonly" />
+    </md-chip-list> -->
+    <textarea mdInput placeholder="g4" rows="2" readonly="readonly" (click)="onAddChipToGroup($event, 'g4', 1)">{{ groups.g4.length > 0 ? groups.g4[0].name : ''}}</textarea>
+	</md-form-field>
+
+	<md-form-field class="comment-box form-field-row">
+    <!-- <input mdInput maxlength="250" placeholder="Comment" [(ngModel)]="comment" > -->
+    <textarea mdInput placeholder="Comment" maxlength="250" rows="2" [(ngModel)]="comment"></textarea>
+    <md-hint align="start"></md-hint>
+    <md-hint align="end">{{comment.length}} / 250</md-hint>
+  </md-form-field>
+
+
+
+	<!-- </form> -->
+	<div>
+		<div class="col-xs-4" style="padding: 0">
+			<button md-raised-button color="primary" (click)="closeDialog()">Cancel</button>
+		</div>
+		<div class="col-xs-4" style="padding: 0; text-align: center;">
+			<button md-raised-button color="basic" (click)="share('TWITTER')"><i class="fa fa-twitter left"></i> Publish & Tweet</button>
+		</div>
+		<div class="col-xs-4" style="padding: 0; text-align: right;">
+			<button md-raised-button color="primary" (click)="publish()">Publish</button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,102 @@
+<layout-toolbar [filter]="query" [pageId]="pageId" (onFilterChanged)="onFilterChanged(filter)" (onShowBookmarks)="showBookmarks()"></layout-toolbar>
+<div class="profile-container">
+  <div class="social">
+    <md-card>
+      <md-card-header>
+        <md-card-title>My Social Profile</md-card-title>
+      </md-card-header>
+      <div class="divider"></div>
+      <md-card-content>
+        <md-grid-list cols="3" rowHeight="70px">
+          <md-grid-tile>
+            <md-card-subtitle class="title" *ngIf="socialConnects.GOOGLE.status == 'connected'">You are connected to Google</md-card-subtitle>
+            <md-card-subtitle  class="title" *ngIf="socialConnects.GOOGLE.status == 'disconnected'">Connect to Google</md-card-subtitle>
+          </md-grid-tile>
+          <md-grid-tile>
+            <span *ngIf="socialConnects.GOOGLE.status == 'connected'">{{ socialConnects.GOOGLE.email }}</span>
+            <span *ngIf="socialConnects.GOOGLE.status == 'disconnected'"><button md-raised-button color="primary" style="min-width:200px; background-color:#d34836;" (click)="connectSocialAccount('GOOGLE')"><i class="fa fa-google" style="margin-right: 8px; font-size: 16px;"></i>Connect to Google</button></span>
+          </md-grid-tile>
+          <md-grid-tile>
+            <span *ngIf="socialConnects.GOOGLE.status == 'connected'" class="disconnect" (click)="disconnectSocialAccount('GOOGLE')">Disconnect</span>
+          </md-grid-tile>
+
+          <md-grid-tile>
+            <md-card-subtitle  class="title" *ngIf="socialConnects.FACEBOOK.status == 'connected'">You are connected to Facebook</md-card-subtitle>
+            <md-card-subtitle  class="title" *ngIf="socialConnects.FACEBOOK.status == 'disconnected'">Connect to Facebook</md-card-subtitle>
+          </md-grid-tile>
+          <md-grid-tile>
+            <span *ngIf="socialConnects.FACEBOOK.status == 'connected'">{{ socialConnects.FACEBOOK.email }}</span>
+            <span *ngIf="socialConnects.FACEBOOK.status == 'disconnected'"><button md-raised-button color="primary" style="min-width:200px; background-color:#3b5998;" (click)="connectSocialAccount('FACEBOOK')"><i class="fa fa-facebook" style="margin-right: 8px; font-size: 16px;"></i>Connect to Facebook</button></span>
+          </md-grid-tile>
+          <md-grid-tile>
+            <span *ngIf="socialConnects.FACEBOOK.status == 'connected'" class="disconnect" (click)="disconnectSocialAccount('FACEBOOK')">Disconnect</span>
+          </md-grid-tile>
+
+          <md-grid-tile>
+            <md-card-subtitle  class="title" *ngIf="socialConnects.TWITTER.status == 'connected'">You are connected to Twitter</md-card-subtitle>
+            <md-card-subtitle  class="title" *ngIf="socialConnects.TWITTER.status == 'disconnected'">Connect to Google</md-card-subtitle>
+          </md-grid-tile>
+          <md-grid-tile>
+            <span *ngIf="socialConnects.TWITTER.status == 'connected'">{{ socialConnects.TWITTER.email }}</span>
+            <span *ngIf="socialConnects.TWITTER.status == 'disconnected'"><button md-raised-button color="primary" style="min-width:200px; background-color:#00aced" (click)="connectSocialAccount('TWITTER')"><i class="fa fa-twitter" style="margin-right: 8px; font-size: 16px;"></i>Connect to Twitter</button></span>
+          </md-grid-tile>
+          <md-grid-tile>
+            <span *ngIf="socialConnects.TWITTER.status == 'connected'" class="disconnect" (click)="disconnectSocialAccount('TWITTER')">Disconnect</span>
+          </md-grid-tile>
+        </md-grid-list>
+      </md-card-content>
+    </md-card>
+  </div>
+  <div class="mine">
+    <md-card>
+      <md-card-header>
+        <md-card-title>My Profile</md-card-title>
+      </md-card-header>
+      <div class="divider"></div>
+      <md-card-content>
+        <div>
+          <md-grid-list cols="3" rowHeight="70px">
+            <md-grid-tile><md-card-subtitle  class="title">Email</md-card-subtitle></md-grid-tile>
+            <md-grid-tile [colspan]=2>
+              <div class="form-input">
+                <md-form-field>
+                  <input mdInput [formControl]="email" required>
+                  <md-error *ngIf="email.invalid">{{emailValidator()}}</md-error>
+                </md-form-field>
+              </div>
+            </md-grid-tile>
+            <md-grid-tile><md-card-subtitle  class="title">Alias</md-card-subtitle></md-grid-tile>
+            <md-grid-tile [colspan]=2>
+              <div class="form-input">
+                <md-form-field>
+                  <input mdInput [formControl]="alias" required>
+                  <md-error *ngIf="alias.invalid">{{ aliasValidator() }}</md-error>
+                </md-form-field>
+              </div>
+            </md-grid-tile>
+            <md-grid-tile><md-card-subtitle  class="title">Gender</md-card-subtitle></md-grid-tile>
+            <md-grid-tile [colspan]=2>
+              <div class="gender">
+                <md-select [(value)]="gender">
+                  <md-option value="male">Male</md-option>
+                  <md-option value="female">Female</md-option>
+                </md-select>
+              </div>
+            </md-grid-tile>
+            <md-grid-tile><md-card-subtitle  class="title">Age</md-card-subtitle></md-grid-tile>
+            <md-grid-tile>
+              <div class="age">
+                <md-select [(value)]="age">
+                  <md-option *ngFor="let range of ageTable" [value]="range.value">{{ range.title }}</md-option>
+                </md-select>
+              </div>
+            </md-grid-tile>
+            <md-grid-tile [rowspan]=2><button md-fab class="save-btn" mdTooltip="Save" mdTooltipPosition="left" color="primary" (click)="saveProfile()"><md-icon>save</md-icon></button></md-grid-tile>
+            <md-grid-tile><md-card-subtitle  class="title">Location</md-card-subtitle></md-grid-tile>
+            <md-grid-tile><span>{{ address.city }}, {{ address.state }}, {{ address.country }}</span></md-grid-tile>
+          </md-grid-list>
+        </div>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>

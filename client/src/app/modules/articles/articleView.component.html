@@ -1,0 +1,51 @@
+<layout-toolbar [filter]="query" (onFilterChanged)="onFilterChanged(filter)"></layout-toolbar>
+
+<div class="articleView-container">
+  <div id="svgArticleView" [style.width.px]="width" [style.height.px]="height"></div>
+  <span class="btn-close pointer pull-right" (click)="closeArticleView()"><md-icon>close</md-icon></span>
+  <div class="articleMeta" (window:resize)="onResize($event)" *ngIf="article != null">
+    <div class="header">
+        <div class="title">{{article.title}}</div>
+    </div>
+    <div class="toolbar">
+      <div class="articleSource pull-left">
+        <img src="{{ article.articleSourceIcon }}" />
+        <span class="siteTitle">{{ article.articleSource }}</span>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <span class="user">{{ article.users[0].name }}</span>
+      </div>
+      <div class="articleTime pull-left">
+        <span class="time">{{ article.time }}</span>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <span class="articleId">{{ article.slug }}</span>
+      </div>
+      <div class="buttons pull-left">
+        <span class="pointer pull-right more" [mdMenuTriggerFor]="menuArticle"><md-icon>more_horiz</md-icon></span>
+        <md-menu #menuArticle="mdMenu">
+          <button md-menu-item (click)="bookmarkPost()" *ngIf="currentUser != null">
+            <span *ngIf="article.bookmarked">Bookmarked</span>
+            <span *ngIf="!article.bookmarked">Bookmark</span>
+          </button>
+          <button md-menu-item (click)="openArticleSource()">
+            <!-- <md-icon>voicemail</md-icon> -->
+            <span>Open Article Source</span>
+          </button>
+          <button md-menu-item (click)="copyArticleLink()">
+            <span>Copy Article Link</span>
+          </button>
+          <button md-menu-item (click)="copyArticleId()">
+            <span>Copy Article Id</span>
+          </button>
+          <button md-menu-item>
+            <span >Share Post</span>
+          </button>
+          <button md-menu-item>
+            <span >Report Post</span>
+          </button>
+        </md-menu>
+        <span class="pointer pull-right edit" (click)="editArticle()">Add your Opinion</span>
+      </div>
+    </div>
+    <div class="contents" [innerHTML]="article.bodyHtml"></div>
+  </div>
+</div>

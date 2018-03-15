@@ -1,0 +1,154 @@
+.title-bar {
+  padding: 0px;
+  background: rgb(241, 241, 241) !important;
+  height: 48px;
+  min-height: 48px;
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+.title-bar .search {
+  position: relative;
+  margin: auto;
+  color: black;
+  width: 35%;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.title-bar .search-text {
+  position: relative;
+  float: left;
+  color: black;
+  background: rgb(224, 224, 224);
+  width: 100%;
+  outline: none;
+  border: 0;
+  border-radius: 4px;
+  padding: 5px;
+  padding-left: 35px;
+  padding-right: 35px;
+}
+.title-bar .search-icon {
+  font-size: 33px;
+  position: absolute;
+  z-index: 1;
+  padding:4px;
+  color: rgb(8, 80, 193);
+  cursor: pointer;
+  float: left;
+}
+.title-bar .clear-search {
+  font-size: 20px;
+  position: absolute;
+  z-index: 1;
+  cursor: pointer;
+  /*padding: 8px;
+  float: right;*/
+  right: 10px !important;
+  color: rgb(8, 80, 193);
+  font-size: 33px;
+  right: 5px;
+  top: 3px;
+}
+.title-bar .md-menu {
+  color: black;
+  padding: 0 21px;
+  cursor: pointer;
+  display: inline-flex;
+}
+.title-bar .md-filter {
+  color: black;
+  cursor: pointer;
+  display: inline-flex;
+}
+.title-bar .md-more {
+  color: black;
+  padding: 0 21px;
+  cursor: pointer;
+  display: inline-flex;
+}
+
+.articleView-container {
+  position: relative;
+}
+.btn-close {
+  position: absolute;
+  right: 10px;
+  top: 3px;
+}
+.articleMeta {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 900px;
+  height: 600px;
+  background: #fff;
+}
+
+.articleMeta .header {
+  border: 1px solid #c2c5c7;
+  border-bottom: 0px;
+  height: 100px;
+}
+
+
+.articleMeta .title {
+  padding: 0px;
+  font-size: 18px;
+  float: left;
+  margin-top: 20px;
+  color: #238fce;
+}
+.articleMeta .toolbar {
+  width: 100%;
+  height: 30px;
+  font-size: 13px;
+  border-right: 1px solid #c2c5c7;
+}
+.articleMeta .toolbar .articleSource{
+  width: 33%;
+}
+.articleMeta .toolbar .articleSource img {
+  width: 25px;
+  height: 25px;
+  margin-top: 2px;
+  margin-left: 2px;
+}
+
+.articleMeta .toolbar .articleSource .siteTitle {
+  line-height: 27px;
+}
+.articleMeta .toolbar .articleSource .user {
+  line-height: 27px;
+}
+
+.articleMeta .toolbar .articleTime {
+  color: #737373;
+  text-align: center;
+  width: 34%;
+}
+.articleMeta .toolbar .articleTime .time {
+  line-height: 27px;
+}
+.articleMeta .toolbar .articleTime .articleId {
+  line-height: 27px;
+}
+.articleMeta .toolbar .buttons {
+  width: 33%;
+}
+
+.articleMeta .toolbar .buttons .edit {
+  color: #2a6ba3;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-right: 20px;
+  line-height: 27px;
+}
+.articleMeta .toolbar .buttons .more {
+  margin-right: 10px;
+}
+.articleMeta .contents {
+  width: 100%;
+  height: 470px;
+  overflow-y: auto;
+  border:1px solid #ccc;
+}

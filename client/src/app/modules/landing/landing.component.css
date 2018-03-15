@@ -1,0 +1,133 @@
+
+
+
+.column {
+  margin: 0px;
+  flex: 1 1 50%;
+}
+.user {
+  font-size: 40px;
+  padding: 8px;
+  cursor: pointer;
+}
+.title {
+  float: right;
+  padding: 13px;
+  font-size: 15px;
+}
+
+/*md-option {
+  font-size: 10px;
+}*/
+.container {
+  overflow-y: scroll;
+  width: 100%;
+  height: 950px;
+}
+
+
+.mat-slide-toggle-thumb {
+  background: rgb(11, 82, 193);
+}
+.add-btn{
+  position: absolute;
+  right: 8px;
+  left: auto;
+  top: auto;
+  bottom: 10px;
+  margin-right: 8px;
+}
+.ads-btn{
+  position: absolute;
+  top: auto;
+  right: auto;
+  left: 5px;
+  bottom: 20px;
+
+  display:none; /* removed for now */
+}
+.filter-btn{
+  position: absolute;
+  bottom: auto;
+  right: auto;
+  left: 0px;
+  top: 72px;
+
+  display:none; /* removed for now */
+}
+
+.social-btn {
+  position: absolute;
+  left: 0;
+  bottom: 80px;
+  margin-left: 10px;
+}
+.social-btn>a {
+  position: relative;
+  border-radius:50%;
+  padding:10px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 0 2px;
+  font-size:30px;
+  left: 10px;
+  display: block;
+}
+.social-btn>a:hover {
+  opacity: 0.8;
+}
+.fa-facebook {
+  background: #3B5998;
+}
+.fa-twitter {
+  background: #55ACEE;
+}
+.fa-google {
+  background: #dd4b39;
+}
+.fa-linkedin {
+  background: #007bb5;
+}
+.status-view {
+  margin-right: 25px;
+}
+.history-view {
+  margin-right: 15px;
+}
+.mat-select-placeholder {
+  position: absolute !important;
+  color:red !important;
+}
+
+
+
+.filtersDialog {
+  position: absolute;
+  left: -20px;
+  top: 175px;
+  width: 310px;
+}
+
+
+/*Common styles*/
+
+.btn-left-margin {
+  margin-left: 18px;
+}
+
+
+
+
+
+
+
+.article_container {
+  position: absolute;
+  background: #fff;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}
