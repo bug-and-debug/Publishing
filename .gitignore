@@ -1,0 +1,5 @@
+client/node_modules/*
+app/client/*
+node_modules/*
+logger/*
+!logger/.gitkeep
