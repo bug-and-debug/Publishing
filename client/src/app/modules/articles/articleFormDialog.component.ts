@@ -52,16 +52,13 @@ export class ArticleFormDialog {
     this.dialogRef.updateSize('300', '300');
     this.dialogRef.updatePosition({ top: '50px', right: '100px' });
     this.node = data.node;
-    this.me = this.authService.getCurrentUser()
+    this.me = AuthService.getCurrentUser()
     if(this.node && this.me) {
       if(_.findIndex(this.node.users, user => user['_id'].toString() === this.me._id) >= 0) this.isArticleOwner = true;
     }
 
-    console.log(this.isArticleOwner)
-
+    console.log(this.node)
   }
-
-
 
   ngOnInit() {
     if(this.node) {
@@ -145,7 +142,8 @@ export class ArticleFormDialog {
         data: { title: 'Warning',
                 okButton: 'Login',
                 subject: 'You did not login yet. Please login first',
-                cancelButton: 'Cancel'
+                cancelButton: 'Cancel',
+                action: 'login'
               }
       });
 
@@ -176,7 +174,7 @@ export class ArticleFormDialog {
 
     let states = ["S1", "S2", "S3"];
     let groupsData = _.chain(this.groups).mapValues((gs: any, gt) => { return _.map(gs, (g, index) => { return { groupType: gt, name: g['name'], state: states[index % 3]}; }); }).values().flatten().filter((d:any) => d.name != '').value();
-    var postData = {"comment" : this.comment, "groups": groupsData, "user": this.authService.getCurrentUser()};
+    var postData = {"comment" : this.comment, "groups": groupsData, "user": AuthService.getCurrentUser()};
 
     if(this.node) {
       this.loadingSpinnerService.show();
@@ -219,6 +217,7 @@ export class ArticleFormDialog {
   }
 
   onAddChipToGroup($event, group, limit) {
+    console.log(this.groups[group])
     if($event.target.tagName.toLowerCase() == 'md-icon') return;//  || (this.node == null && !this.articleInfo.valid) || (limit > 1 && this.groups[group].length >= limit)) return;
 
     let groupValue = []
@@ -237,6 +236,7 @@ export class ArticleFormDialog {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
+        console.log(result)
         this.groups[group] = result;
         // this.groups[group] = result.reduce((acc, item) => {
         //   acc.push({name: item, votes: {agree:[], disagree: []}})
@@ -248,6 +248,7 @@ export class ArticleFormDialog {
 
   remove(groupName: any, groupType: any): void {
     let index = this.groups[groupType].findIndex(group => group.name == groupName)
+
     if (!this.me) {
       this.mdSnackBar.open('Please log in', null, { duration: 2000 });
       this.dialogRef.close(false)
@@ -255,6 +256,7 @@ export class ArticleFormDialog {
     }
 
     let canRemove = false
+
     if ((this.groups[groupType][index]['votes']['agrees'].length == 0 ||
         (this.groups[groupType][index]['votes']['agrees'].findIndex(user => user.toString() == this.me._id) >= 0 && this.groups[groupType][index]['votes']['agrees'].length == 1))
        &&
@@ -265,7 +267,7 @@ export class ArticleFormDialog {
       }
 
     if(!canRemove) {
-      this.mdSnackBar.open('You can only change the values that others have not opined (Agreed/Disagreed) on', null, { duration: 2000 });
+      this.mdSnackBar.open('You can only change the values that others have not opinioned (Agreed/Disagreed) on', null, { duration: 2000 });
       return
     }
 

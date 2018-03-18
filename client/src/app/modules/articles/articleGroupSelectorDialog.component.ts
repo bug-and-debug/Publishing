@@ -58,7 +58,7 @@ export class ArticleGroupSelectorDialog {
   }
 
   onItemAdded(item) {
-    this.data.push({name: item.value, votes: {agree:[], disagree: []}})
+    this.data.push({name: item.value, votes: {agrees:[], disagrees: []}})
     this.importValues()
   }
 

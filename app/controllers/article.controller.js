@@ -248,7 +248,7 @@ const edit = async function(req, res) {
 const destroy = async function(req, res) {
   try {
     await ArticleModel.deleteOne({_id: req.params.id});
-    res.send(true);
+    res.send({status: 'ok'});
   }
   catch(err) {
     ErrorHelper.handleError(res, err, 400);

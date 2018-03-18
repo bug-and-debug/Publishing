@@ -26,15 +26,6 @@
 	</div>
 	<div  style="margin-top:20px;"></div>
 	<md-form-field class="form-field-row" *ngIf="node == null || isArticleOwner">
-    <!-- <md-chip-list #group11 (click)="onAddChipToGroup($event, 'g11', 1)">
-		  <md-chip *ngFor="let groupName of groups.g11" (remove)="remove(groupName, 'g11')">
-	      {{groupName}}
-	      <md-icon mdChipRemove>cancel</md-icon>
-	    </md-chip>
-	    <input placeholder="g11"
-	       [mdChipInputFor]="group11"
-	       readonly="readonly" />
-    </md-chip-list> -->
     <textarea mdInput placeholder="g11" rows="2" readonly="readonly" (click)="onAddChipToGroup($event, 'g11', 1)">{{ groups.g11.length > 0 ? groups.g11[0].name : ''}}</textarea>
 	</md-form-field>
 	<md-form-field class="form-field-row">
@@ -49,15 +40,6 @@
     </md-chip-list>
 	</md-form-field>
 	<md-form-field class="form-field-row">
-    <!-- <md-chip-list #group2 (click)="onAddChipToGroup($event, 'g2', 1)">
-		  <md-chip *ngFor="let groupName of groups.g2" (remove)="remove(groupName, 'g2')">
-	      {{groupName}}
-	      <md-icon mdChipRemove>cancel</md-icon>
-	    </md-chip>
-	    <input placeholder="g2"
-	       [mdChipInputFor]="group2"
-	       readonly="readonly" />
-    </md-chip-list> -->
     <textarea mdInput placeholder="g2" rows="2" readonly="readonly" (click)="onAddChipToGroup($event, 'g2', 1)">{{ groups.g2.length > 0 ? groups.g2[0].name : ''}}</textarea>
 	</md-form-field>
 	<md-form-field class="form-field-row">
@@ -72,15 +54,6 @@
     </md-chip-list>
 	</md-form-field>
 	<md-form-field class="form-field-row">
-    <!-- <md-chip-list #group4 (click)="onAddChipToGroup($event, 'g4', 1)">
-		  <md-chip *ngFor="let groupName of groups.g4" (remove)="remove(groupName, 'g4')">
-	      {{groupName}}
-	      <md-icon mdChipRemove>cancel</md-icon>
-	    </md-chip>
-	    <input placeholder="g4"
-       [mdChipInputFor]="group4"
-       readonly="readonly" />
-    </md-chip-list> -->
     <textarea mdInput placeholder="g4" rows="2" readonly="readonly" (click)="onAddChipToGroup($event, 'g4', 1)">{{ groups.g4.length > 0 ? groups.g4[0].name : ''}}</textarea>
 	</md-form-field>
 

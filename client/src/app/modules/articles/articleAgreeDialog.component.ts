@@ -36,9 +36,9 @@ export class ArticleAgreeDialog {
       this.title = this.node.group.name;
     }
 
-    if(_.includes(this.node.votes.agrees, this.authService.getCurrentUser()._id)) {
+    if(_.includes(this.node.votes.agrees, AuthService.getCurrentUser()._id)) {
       this.opinion = 'agree'
-    } else if(_.includes(this.node.votes.disagrees, this.authService.getCurrentUser()._id)) {
+    } else if(_.includes(this.node.votes.disagrees, AuthService.getCurrentUser()._id)) {
       this.opinion = 'disagree'
     } else {
       this.opinion = 'none'
@@ -67,7 +67,7 @@ export class ArticleAgreeDialog {
     this.loadingSpinnerService.show();
     this.restangular.one('article', this.node.nodeData.article_id)
                     .one(this.node.nodeData.g == 'g5' ? 'comment' : 'group', this.node._id)
-                    .one('user', this.authService.getCurrentUser()._id)
+                    .one('user', AuthService.getCurrentUser()._id)
                     .customPOST({}, 'vote/' + vote).subscribe(votes => {
         this.loadingSpinnerService.hide();
         // if(vote == 'agree') this.node.votes.agrees ++;

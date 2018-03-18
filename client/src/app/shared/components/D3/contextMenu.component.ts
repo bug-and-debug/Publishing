@@ -1,4 +1,5 @@
 import * as d3 from "d3/index";
+import { SharedService } from './../../services/shared.service'
 
 export class D3ContextMenu {
     svg:any = null;
@@ -52,17 +53,18 @@ export class D3ContextMenu {
         }
     }
     pop(x, y, meta) {
+        let items = SharedService.canDeleteArticle(meta) ? this.items : this.items.slice(0, this.items.length-1)
         this.meta= meta;
         let that = this;
         d3.select('.context-menu').remove();
-        this.scaleItems();
+        this.scaleItems(items);
 
         // Draw the menu
         this.svg
             .append('g').attr('class', 'context-menu')
             .style('filter', "url('#drop-shadow')")
             .selectAll('tmp')
-            .data(this.items).enter()
+            .data(items).enter()
             .append('g').attr('class', 'menu-entry')
             .style('cursor', 'pointer')
             .on('mouseover', function()  { that.highlight(d3.select(this).select('rect'), true); })
@@ -100,10 +102,10 @@ export class D3ContextMenu {
     }
 
     // Automatically set width, height, and margin;
-    scaleItems() {
+    scaleItems(items) {
         if (this.rescale) {
             this.svg.selectAll('tmp')
-                .data(this.items).enter()
+                .data(items).enter()
                 .append('text')
                 .text((d:any) => d.label )
                 .style('fill', this.style.text.fill)

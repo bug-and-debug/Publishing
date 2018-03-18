@@ -30,10 +30,10 @@ export class HeaderComponent {
   }
 
   ngOnInit() {
-  	this.currentUser = this.authService.getCurrentUser();
+  	this.currentUser = AuthService.getCurrentUser();
 
     this.authSubscription = this.authService.subscribe((res) => {
-      this.currentUser = this.authService.getCurrentUser();
+      this.currentUser = AuthService.getCurrentUser();
     });
   }
 
@@ -64,7 +64,7 @@ export class HeaderComponent {
 
   myPosts() {
       this.router.navigate(['/']);
-      this._sharedService.emitAction({ action: 'userposts', data: this.authService.getCurrentUser()._id });
+      this._sharedService.emitAction({ action: 'userposts', data: AuthService.getCurrentUser()._id });
       this.pageTitle = 'My Posts'
   }
 }

@@ -21,7 +21,7 @@ export class AuthService {
 		localStorage.setItem('currentUser', JSON.stringify(user));
 	}
 
-	getCurrentUser() {
+	static getCurrentUser() {
 		let currentUser = localStorage.getItem('currentUser');
 		if(currentUser == null || currentUser == '') return null;
 		return JSON.parse(currentUser);
@@ -48,9 +48,9 @@ export class AuthService {
 
 	disconnect(provider, callback) {
 		//this._auth.signOut();
-		if (this.getCurrentUser() != null) {
+		if (AuthService.getCurrentUser() != null) {
 			this.loadingSpinnerService.show()
-			this.restangular.one('auth', this.getCurrentUser()._id).customPOST({provider: provider}, 'removeSocialAccount').subscribe(updatedUser => {
+			this.restangular.one('auth', AuthService.getCurrentUser()._id).customPOST({provider: provider}, 'removeSocialAccount').subscribe(updatedUser => {
 				this.loadingSpinnerService.hide();
 				this.saveCurrentUser(updatedUser)
 				callback(updatedUser);
@@ -73,7 +73,7 @@ export class AuthService {
 			if(user != null) {
 				this.loadingSpinnerService.show();
 				// get user locations
-					if(this.getCurrentUser() == null) {
+					if(AuthService.getCurrentUser() == null) {
 						this._shared.getLocation().then(locData => {
 							var location = {}
 							location['country'] = locData['country']
@@ -90,7 +90,7 @@ export class AuthService {
 							console.log(err)
 						})
 					} else {
-						this.restangular.one('auth', this.getCurrentUser()._id).customPOST(user, 'addSocialAccount').subscribe(updatedUser => {
+						this.restangular.one('auth', AuthService.getCurrentUser()._id).customPOST(user, 'addSocialAccount').subscribe(updatedUser => {
 							this.loadingSpinnerService.hide();
 							this.saveCurrentUser(updatedUser)
 							callback(updatedUser);

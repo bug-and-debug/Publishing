@@ -14,11 +14,11 @@ export class ConfirmDialog {
   constructor(@Inject(MD_DIALOG_DATA) public data: any, public dialogRef: MdDialogRef<ConfirmDialog>) {
   }
 
-  onLogin(): void {
-    this.dialogRef.close({action:'login'})
+  onConfirm(): void {
+    this.dialogRef.close({action: this.data['action']})
   }
 
-  onClose(): void {
-
+  onCancel(): void {
+    this.dialogRef.close({action: 'cancel'})
   }
 }

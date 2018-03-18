@@ -51,7 +51,7 @@ export class ArticleViewComponent {
               private mdSnackBar: MdSnackBar,
               private authService: AuthService) {
     this.d3Service = new D3Service();
-    this.currentUser = this.authService.getCurrentUser();
+    this.currentUser = AuthService.getCurrentUser();
   }
 
   ngOnInit() {
@@ -151,9 +151,9 @@ export class ArticleViewComponent {
   }
 
   bookmarkPost() {
-    if (this.authService.getCurrentUser() != null) {
+    if (AuthService.getCurrentUser() != null) {
       this.loadingSpinnerService.show();
-      this.restangular.one('user', this.authService.getCurrentUser()._id).customPOST(null, 'bookmark/' + this.article._id.toString()).subscribe(res => {
+      this.restangular.one('user', AuthService.getCurrentUser()._id).customPOST(null, 'bookmark/' + this.article._id.toString()).subscribe(res => {
         this.loadingSpinnerService.hide();
         this.start()
       }, () => {

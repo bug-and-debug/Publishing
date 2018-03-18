@@ -16,14 +16,16 @@ export class D3Service {
   nodes: any = [];
   simulation: any;
   svgElements: any = {
-  	ellipses: null, 		textsEllipse: null,
+  	ellipses: null,
+      textsEllipse: null,
   	articles: null,
       textsArticleTitle: null, tspansArticleTitle1: null, tspansArticleTitle2: null,
       textsArticleBody: null, tspansArticleBody1: null, tspansArticleBody2: null,
       imgsArticle: null, imgsArticleSite: null, textsArticleSite: null,
       linesArticle: null,
       textsArticleTime: null, editLinksArticle: null, textsArticleMenu: null,
-  	rects: null, 			textsRect: null,
+  	rects: null,
+      textsRect: null,
   	texts: null,
   	links: null,
     shapeRects: null
@@ -143,7 +145,8 @@ export class D3Service {
         {id: 'COPY_ARTICLE_LINK', label: 'Copy Article Link'},
         {id: 'COPY_ARTICLE_ID', label: 'Copy Article Id'},
         {id: 'SHARE_POST', label: 'Share Post'},
-        {id: 'REPORT_POST', label: 'Report Post'}]);
+        {id: 'REPORT_POST', label: 'Report Post'},
+        {id: 'DELETE_ARTICLE', label: 'Delete Article'}]);
     this.articleMenu.on('BOOKMARK_POST', { context: this, func: (d) => {
       this.listeners.bookmark_post.func.call(this.listeners.bookmark_post.context, d);
     }});
@@ -161,6 +164,10 @@ export class D3Service {
     }});
     this.articleMenu.on('REPORT_POST', { context: this, func: (d) => {
       this.listeners.report_post.func.call(this.listeners.report_post.context, d);
+    }});
+
+    this.articleMenu.on('DELETE_ARTICLE', { context: this, func: (d) => {
+      this.listeners.delete_article.func.call(this.listeners.delete_article.context, d);
     }});
   }
 

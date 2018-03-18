@@ -70,7 +70,7 @@ export class ProfileComponent {
   }
 
   getProfileData() {
-    let profileData = this.authService.getCurrentUser();
+    let profileData = AuthService.getCurrentUser();
 
     this.userId = profileData._id
     profileData['socialConnects'].forEach(platform => {

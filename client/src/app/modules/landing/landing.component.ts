@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common'
-import { MdSnackBar, MdDialog } from '@angular/material';
+import { MdSnackBar, MdDialog, MdDialogRef, MD_DIALOG_DATA, MdChipInputEvent, ENTER } from '@angular/material';
 import { Restangular } from 'ngx-restangular';
 import { DataService } from '../../shared/services/dataService';
 import { ArticleService } from '../../shared/services/articleService';
@@ -12,6 +12,7 @@ import { AuthService } from '../../shared/services/authService'
 import * as d3 from "d3/index";
 import * as _ from "lodash";
 import * as moment from 'moment';
+import { ConfirmDialog } from "../../shared/components/confirmDialog/confirmDialog.component"
 
 @Component({
   selector: 'landing',
@@ -80,7 +81,7 @@ export class LandingComponent {
           this.showBookmarks();
       });
 
-    this.currentUser = authService.getCurrentUser();
+    this.currentUser = AuthService.getCurrentUser();
     this.query.bookmarkedBy = (this.currentUser != null) ? this.currentUser._id : null
   }
 
@@ -108,6 +109,8 @@ export class LandingComponent {
     this.d3Service.on('share_post', this.sharePost, this);
 
     this.d3Service.on('report_post', this.reportPost, this);
+
+    this.d3Service.on('delete_article', this.deleteArticle, this);
 
     this.d3Service.on('article_navigate', this.onArticleNavigate, this);
 
@@ -197,7 +200,6 @@ export class LandingComponent {
     this.data = articles;
 
     this.nodes = ArticleService.initNodes(articles, this.query['currentView'], this.query['stateView'], this.query);
-
     this.d3Service.start(this.nodes, this.getArticleIndex(this.query.article));
   }
   getArticleIndex(slug) {
@@ -206,6 +208,7 @@ export class LandingComponent {
     }
     return 0;
   }
+
   start(refreshData: boolean = true) {
     if(refreshData) {
       this.loadingSpinnerService.show();
@@ -373,6 +376,38 @@ export class LandingComponent {
 
   reportPost(node) {
 
+  }
+
+  deleteArticle(node) {
+
+    let dialogRef = this.dialog.open(ConfirmDialog, {
+      width: '400px',
+      height: '200px',
+      data: { title: 'Delete Article',
+              okButton: 'Yes',
+              subject: 'Do you really want to delete this article?',
+              cancelButton: 'Cancel',
+              action: 'delete-article'
+            }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        switch (result.action) {
+          case 'delete-article':
+            this.restangular.one('article', node._id).customDELETE(null).subscribe(result => {
+              console.log('delete article:' + result)
+              this.loadingSpinnerService.hide();
+              this.start()
+            }, () => {
+              this.loadingSpinnerService.hide();
+            });
+            break
+          default:
+            break
+        }
+      }
+    });
   }
 
   showUserPosts(userId) {
