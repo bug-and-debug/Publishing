@@ -41,6 +41,7 @@ const slug = async function(req, res) {
 }
 
 const search = async function(req, res) {
+  console.log('_______________ search .... ___________')
   try {
     let query = _.pick(req.query, [ 'search', 'views', 'periodStart', 'periodEnd', 'stateView', 'g11', 'g12', 'g13', 'user', 'location', 'group', 'bookmarkedBy', 'bookmarks' ]);
     let builder = ArticleModel.find();
@@ -78,7 +79,7 @@ const search = async function(req, res) {
 
     // group
     if(query.group) {
-      builder = builder.where('groups').elemmdch({ group: query.group });
+      builder = builder.where('groups').elemMatch({ group: query.group });
     }
 
     let groupsFilter = ['g11', 'g12', 'g13'];
@@ -95,7 +96,7 @@ const search = async function(req, res) {
             return;
           }
           orConditions.push({
-            groups: { $elemmdch: { group: existingGroup._id } }
+            groups: { $elemMatch: { group: existingGroup._id } }
           });
         }
       };
