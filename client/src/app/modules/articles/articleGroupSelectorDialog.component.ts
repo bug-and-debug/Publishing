@@ -52,7 +52,7 @@ export class ArticleGroupSelectorDialog {
     if(this.canRemove(item)) {
       this.data.splice(index, 1)
     } else {
-      this.mdSnackBar.open('You can only change the values that others have not opined (Agreed/Disagreed) on', null, { duration: 2000 });
+      this.mdSnackBar.open('You can only change the values that others have not opinioned (Agreed/Disagreed) on', null, { duration: 2000 });
     }
     this.importValues()
   }

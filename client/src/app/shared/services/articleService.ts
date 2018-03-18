@@ -49,6 +49,12 @@ export class ArticleService {
 
 
   public static initNodes(data, currentView, stateView: boolean, query: any) {
+
+    console.log(data)
+    // console.log(this.query['stateView'])
+    // console.log(this.nodes)
+
+
     let nodes = [], nodeIndex = 0;
     let focusedGroup = null;
     if(currentView == 'FOCUS' && data.length > 0) {
@@ -141,7 +147,6 @@ export class ArticleService {
       // Add the article's child nodes
       let clustersPopulation = {};
 
-      // Add User nodes.
       let newNodes = []
       // Add Group nodes.
       newNodes = newNodes.concat(_.map(_.sortBy(ArticleService.sliceGroup(article.groups, 'group', currentView, focusedGroup), (d:any) => stateView ? d.group.state : d.group.groupType), (d: any, index) => {
@@ -165,47 +170,51 @@ export class ArticleService {
         return d;
       }));
 
-      newNodes = newNodes.concat(_.map(ArticleService.sliceGroup(article.users, 'user', currentView, focusedGroup), (d: any, index) => {
-        let parentIndex = article.nodeData.nodeIndex;
-        let clusterName = stateView ? 'S3' : 'g21';
-        clustersPopulation[clusterName] = clustersPopulation[clusterName] ? clustersPopulation[clusterName] + 1 : 1;
-        d.nodeData = {
-          nodeIndex: nodeIndex,
-          g: 'g21',
-          clusterName,
-          indexInCluster : clustersPopulation[clusterName]-1,
-          parentIndex: parentIndex,
-          article_id: article._id,
-          type: 'user',
-          text: ArticleService.getNodeText(d, 'user'),
-          link: null,
-          movable: true
-        }
-        d.fx = d.fy = null;
-        nodeIndex ++;
-        return d;
-      }));
-      // Add Location nodes.
-      newNodes = newNodes.concat(_.map(ArticleService.sliceGroup(article.locations, 'location', currentView, focusedGroup), (d: any, index) => {
-        let parentIndex = article.nodeData.nodeIndex;
-        let clusterName = stateView ? 'S3' : 'g22';
-        clustersPopulation[clusterName] = clustersPopulation[clusterName] ? clustersPopulation[clusterName] + 1 : 1;
-        d.nodeData = {
-          nodeIndex: nodeIndex,
-          g: 'g22',
-          clusterName,
-          indexInCluster : clustersPopulation[clusterName]-1,
-          parentIndex: parentIndex,
-          article_id: article._id,
-          type: 'location',
-          text: ArticleService.getNodeText(d, 'location'),
-          link: null,
-          movable: true
-        }
-        d.fx = d.fy = null;
-        nodeIndex ++;
-        return d;
-      }));
+      if (currentView == 'ARTICLE') { // only display users and locations on ARTICLE view
+        // Add User nodes.
+        newNodes = newNodes.concat(_.map(ArticleService.sliceGroup(article.users, 'user', currentView, focusedGroup), (d: any, index) => {
+          let parentIndex = article.nodeData.nodeIndex;
+          let clusterName = stateView ? 'S3' : 'g21';
+          clustersPopulation[clusterName] = clustersPopulation[clusterName] ? clustersPopulation[clusterName] + 1 : 1;
+          d.nodeData = {
+            nodeIndex: nodeIndex,
+            g: 'g21',
+            clusterName,
+            indexInCluster : clustersPopulation[clusterName]-1,
+            parentIndex: parentIndex,
+            article_id: article._id,
+            type: 'user',
+            text: ArticleService.getNodeText(d, 'user'),
+            link: null,
+            movable: true
+          }
+          d.fx = d.fy = null;
+          nodeIndex ++;
+          return d;
+        }));
+        // Add Location nodes.
+        newNodes = newNodes.concat(_.map(ArticleService.sliceGroup(article.locations, 'location', currentView, focusedGroup), (d: any, index) => {
+          let parentIndex = article.nodeData.nodeIndex;
+          let clusterName = stateView ? 'S3' : 'g22';
+          clustersPopulation[clusterName] = clustersPopulation[clusterName] ? clustersPopulation[clusterName] + 1 : 1;
+          d.nodeData = {
+            nodeIndex: nodeIndex,
+            g: 'g22',
+            clusterName,
+            indexInCluster : clustersPopulation[clusterName]-1,
+            parentIndex: parentIndex,
+            article_id: article._id,
+            type: 'location',
+            text: ArticleService.getNodeText(d, 'location'),
+            link: null,
+            movable: true
+          }
+          d.fx = d.fy = null;
+          nodeIndex ++;
+          return d;
+        }));
+      }
+
       // Add Comment nodes.
       newNodes = newNodes.concat(_.map(ArticleService.sliceGroup(article.comments, 'comment', currentView, focusedGroup), (d: any, index) => {
         let parentIndex = article.nodeData.nodeIndex;
@@ -233,19 +242,6 @@ export class ArticleService {
         let position = DataService.enterPosition(article, newNode.nodeData.clusterName, index)
         newNode.x = position.point.x + newNode.style.width * position.widthMultiplier
         newNode.y = position.point.y + newNode.style.height * position.heightMultiplier
-
-        // if (newNode.nodeData.clusterName == "g11") {
-        //   newNode.x = article.x - newNode.style.width / 2
-        //   newNode.y = article.y - newNode.style.height
-        // }
-        // else if (newNode.nodeData.clusterName == "g6") {
-        //   newNode.x = article.x + 44 + Math.random() * (article.style.width - 88)
-        //   newNode.y = article.y - 50 - newNode.style.height - Math.random() * 200
-        // }
-        // else if (newNode.nodeData.clusterName == "g5") {
-        //   newNode.x = article.x + 44 + Math.random() * (article.style.width - 88)
-        //   newNode.y = article.y + 50 + Math.random() * 200
-        // }
       })
 
       article.nodeData.clustersPopulation = clustersPopulation;

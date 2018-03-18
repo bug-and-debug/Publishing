@@ -1,5 +1,6 @@
 import * as d3 from "d3/index";
 import { SharedService } from './../../services/shared.service'
+import { AuthService } from './../../services/authService'
 
 export class D3ContextMenu {
     svg:any = null;
@@ -53,7 +54,10 @@ export class D3ContextMenu {
         }
     }
     pop(x, y, meta) {
-        let items = SharedService.canDeleteArticle(meta) ? this.items : this.items.slice(0, this.items.length-1)
+        let items = this.items
+        if (!AuthService.getCurrentUser())
+          items = items.slice(1, items.length)
+        items = SharedService.canDeleteArticle(meta) ? items : items.slice(0, items.length-1)
         this.meta= meta;
         let that = this;
         d3.select('.context-menu').remove();

@@ -31,17 +31,21 @@ export class SharedService {
 
 
   static canDeleteArticle(article) {
-    // check user is article owner
-    if (!SharedService.isArticleOwner(AuthService.getCurrentUser()['_id'], article))
+    if (!AuthService.getCurrentUser()) {
       return false
-    // check there are other's opinions
-    if (SharedService.hasOthersOpinions(AuthService.getCurrentUser()['_id'], article))
-      return false
-    //check there are other's agree/Disagree
-    if (SharedService.hasOthersVotes(AuthService.getCurrentUser()['_id'], article))
-      return false
-    //console.log(article)
-    return true
+    } else {
+      // check user is article owner
+      if (!SharedService.isArticleOwner(AuthService.getCurrentUser()['_id'], article))
+        return false
+      // check there are other's opinions
+      if (SharedService.hasOthersOpinions(AuthService.getCurrentUser()['_id'], article))
+        return false
+      //check there are other's agree/Disagree
+      if (SharedService.hasOthersVotes(AuthService.getCurrentUser()['_id'], article))
+        return false
+      //console.log(article)
+      return true
+    }
   }
 
   static hasOthersOpinions(userId, article) {

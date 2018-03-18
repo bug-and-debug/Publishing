@@ -198,7 +198,6 @@ export class LandingComponent {
 
   draw(articles) {
     this.data = articles;
-
     this.nodes = ArticleService.initNodes(articles, this.query['currentView'], this.query['stateView'], this.query);
     this.d3Service.start(this.nodes, this.getArticleIndex(this.query.article));
   }
@@ -253,16 +252,27 @@ export class LandingComponent {
   }
 
   nodeClick(node, elType) {
-    if (node.nodeData.g == 'g0' && elType == 'editLinksArticle') {
-      ArticleService.popupArticleForm(this.dialog, node, result => {
-        if (result) this.start();
-      });
-    }
-    if (node.nodeData.g == 'g0' && (elType == 'tspansArticleTitle1') || (elType == 'tspansArticleTitle2')) {
-      this.showArticle(node);
-    }
-    else {
-      this.showAgreeDialog(node);
+    if (!AuthService.getCurrentUser() && elType !== 'textsArticleMenu') {
+      console.log('eltype: ' + elType)
+      if (elType == 'textsEllipse' || elType == 'textsRect') {
+        this.mdSnackBar.open('Please login to agree/disagree', null, { duration: 6000 })
+      } else if (elType == 'editLinksArticle') {
+        this.mdSnackBar.open('Please login to add your opinion', null, { duration: 6000 })
+      } else {
+        this.mdSnackBar.open('Please login', null, { duration: 6000 })
+      }
+    } else {
+      if (node.nodeData.g == 'g0' && elType == 'editLinksArticle') {
+        ArticleService.popupArticleForm(this.dialog, node, result => {
+          if (result) this.start();
+        });
+      }
+      if (node.nodeData.g == 'g0' && (elType == 'tspansArticleTitle1') || (elType == 'tspansArticleTitle2')) {
+        this.showArticle(node);
+      }
+      else {
+        this.showAgreeDialog(node);
+      }
     }
   }
 
@@ -317,26 +327,30 @@ export class LandingComponent {
   }
 
   addArticle() {
-    ArticleService.popupArticleForm(this.dialog, null, result => {
-      if (result.action === 'login') {
-        this._sharedService.emitAction({ action: 'login', data: null });
-      } else {
-        this.query.currentView = 'DEFAULT';
-        this.query.article = result.slug;
-        this.query.user = null;
-        this.query.location = null;
-        this.query.group = null;
-        this.query.search = '';
-        this.query.views = '';
-        this.query.periodStart = null;
-        this.query.periodEnd = null;
-        this.query.g11 = null;
-        this.query.g12 = null;
-        this.query.g13 = null;
-        this.setParamsToUrl();
-        this.start();
-      }
-    });
+    if (!AuthService.getCurrentUser()) {
+      this.mdSnackBar.open('Please login to add an article', null, { duration: 6000 })
+    } else {
+      ArticleService.popupArticleForm(this.dialog, null, result => {
+        if (result.action === 'login') {
+          this._sharedService.emitAction({ action: 'login', data: null });
+        } else {
+          this.query.currentView = 'DEFAULT';
+          this.query.article = result.slug;
+          this.query.user = null;
+          this.query.location = null;
+          this.query.group = null;
+          this.query.search = '';
+          this.query.views = '';
+          this.query.periodStart = null;
+          this.query.periodEnd = null;
+          this.query.g11 = null;
+          this.query.g12 = null;
+          this.query.g13 = null;
+          this.setParamsToUrl();
+          this.start();
+        }
+      });
+    }
   }
 
   toggleSocial() {
