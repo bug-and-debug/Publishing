@@ -12,7 +12,7 @@ export class AuthService {
 	login(provider) {
 		switch(true) {
 			case provider == 'GOOGLE': this._auth.signIn(GoogleLoginProvider.PROVIDER_ID); break;
-			case provider == 'FACEBOOK': this._auth.signIn(FacebookLoginProvider.PROVIDER_ID); break;
+			//case provider == 'FACEBOOK': this._auth.signIn(FacebookLoginProvider.PROVIDER_ID); break;
 			case provider == 'TWITTER': break;
 		}
 	}
@@ -39,10 +39,7 @@ export class AuthService {
 	logout() {
 		// remove user from local storage to log user out
 		localStorage.removeItem('currentUser');
-
 		this._auth.signOut();
-
-		// call backend
 		this.restangular.all('auth').customGET('logout');
 	}
 
@@ -69,6 +66,8 @@ export class AuthService {
 
 	subscribe(callback) {
 		this._auth.authState.subscribe((user) => {
+			console.log('____________________ strange ________________________')
+			console.log(user)
 			// try to login
 			if(user != null) {
 				this.loadingSpinnerService.show();

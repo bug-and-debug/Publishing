@@ -238,10 +238,6 @@ export class ArticleFormDialog {
       if(result) {
         console.log(result)
         this.groups[group] = result;
-        // this.groups[group] = result.reduce((acc, item) => {
-        //   acc.push({name: item, votes: {agree:[], disagree: []}})
-        //   return acc
-        // }, [])
       }
     });
   }

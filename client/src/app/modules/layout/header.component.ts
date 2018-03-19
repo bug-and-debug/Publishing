@@ -63,7 +63,6 @@ export class HeaderComponent {
   }
 
   myPosts() {
-      this.router.navigate(['/']);
       this._sharedService.emitAction({ action: 'userposts', data: AuthService.getCurrentUser()._id });
       this.pageTitle = 'My Posts'
   }

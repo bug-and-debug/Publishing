@@ -145,7 +145,9 @@ export class LandingComponent {
       g11: null,
       g12: null,
       g13: null,
-      stateView: false
+      stateView: false,
+      bookmarkedBy: null,
+      bookmarks: false
     };
   }
 
@@ -162,7 +164,6 @@ export class LandingComponent {
     for(let q in this.query) {
       if(this.query[q] && this.query[q] != '') queryParams[q] = this.query[q]; else delete queryParams[q];
     }
-
     this.router.navigate(['.'], { queryParams: queryParams });
   }
 
@@ -428,6 +429,7 @@ export class LandingComponent {
     this.resetFilters()
     this.query['user'] = userId
     this.setParamsToUrl();
+    this.start()
   }
 
   showBookmarks() {

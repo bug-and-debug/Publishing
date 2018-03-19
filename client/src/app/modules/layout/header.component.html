@@ -1,7 +1,7 @@
 <md-toolbar class="md-elevation-z3">
   <span class="logo-span" ><i class="material-icons user logo">stars</i><span class="title">{{title}}</span></span>
   <span class="page-title">{{pageTitle}}</span>
-  <span class="menu-span" style="float:right;" >
+  <span class="menu-span" style="display: flex; justify-content: flex-end;" >
     <span *ngIf="currentUser == null"><i class="material-icons user pointer" (click)="showLogin(!bShowLoginPopup)">account_circle</i></span>
     <span *ngIf="currentUser != null" [mdMenuTriggerFor]="menu" class="user-avatar-small pointer"><img src="{{ currentUser.photo }}" /></span>
     <span><i class="material-icons user pointer">help_outline</i></span>
