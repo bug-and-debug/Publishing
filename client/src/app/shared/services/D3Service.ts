@@ -92,10 +92,10 @@ export class D3Service {
         });
 
       d3.select("body").on("keydown", () => {
-        if(d3.event.keyCode == 38) {
+        if(d3.event.keyCode == 37) {
           this.viewNextArticle(false)
         }
-        else if(d3.event.keyCode == 40) {
+        else if(d3.event.keyCode == 39) {
           this.viewNextArticle(true)
         }
       });
@@ -628,6 +628,7 @@ export class D3Service {
 
     this.simulation.restart();
     this.simulation.alpha(1);
+    this.updateArticlePosition(false)
     this.simulation.nodes(this.nodes)
       .on("tick", () => this.ticked());
   }
@@ -647,68 +648,160 @@ export class D3Service {
     if(this.currentArticleIndex < 0) this.currentArticleIndex = articleIndices.length - 1
     if(this.currentArticleIndex >= articleIndices.length) this.currentArticleIndex = 0
 
-    this.translateViewTo(this.nodes[articleIndices[this.currentArticleIndex]].x, this.nodes[articleIndices[this.currentArticleIndex]].y)
+    //this.translateViewTo(this.nodes[articleIndices[this.currentArticleIndex]].x, this.nodes[articleIndices[this.currentArticleIndex]].y)
+    articleIndices.forEach(articleIndex => {
+      this.nodes[articleIndex].x = this.nodes[articleIndex].x - 620 * (direction ? 1: -1)
+    })
+
+    this.updateArticlePosition()
+
     this.listeners.article_navigate.func.call(this.listeners.article_navigate.context, this.currentArticleIndex)
+  }
+
+  updateArticlePosition(animation:boolean = true) {
+    let t = animation ? 1500 : 0
+    this.svgElements.articles
+          .transition()
+          .attr('x', (d:any) => d.x)
+          .attr('y', (d:any) => d.y)
+          .duration(t)
+    this.svgElements.imgsArticle
+          .transition()
+          .attr('x', (d:any) => d.x+1)
+          .attr('y', (d:any) => d.y+1)
+          .duration(t)
+    this.svgElements.textsArticleTitle
+          .transition()
+          .attr('x', (d:any) => d.x)
+          .attr('y', (d:any) => d.y)
+          .duration(t)
+    this.svgElements.tspansArticleTitle1
+          .transition()
+          .attr('x', (d:any) => d.x)
+          .attr('y', (d:any) => d.y + 250)
+          .duration(t)
+    this.svgElements.tspansArticleTitle2
+          .transition()
+          .attr('x', (d:any) => d.x)
+          .attr('y', (d:any) => d.y + 250)
+          .duration(t)
+    this.svgElements.textsArticleBody
+          .transition()
+          .attr('x', (d:any) => d.x)
+          .attr('y', (d:any) => d.y + 40)
+          .duration(t)
+    this.svgElements.tspansArticleBody1
+          .transition()
+          .attr('x', (d:any) => d.x)
+          .attr('y', (d:any) => d.y + 330)
+          .duration(t)
+    this.svgElements.tspansArticleBody2
+          .transition()
+          .attr('x', (d:any) => d.x)
+          .attr('y', (d:any) => d.y + 330)
+          .duration(t)
+    this.svgElements.tspansArticleBody3
+          .transition()
+          .attr('x', (d:any) => d.x)
+          .attr('y', (d:any) => d.y + 330)
+          .duration(t)
+    this.svgElements.tspansArticleBody4
+          .transition()
+          .attr('x', (d:any) => d.x)
+          .attr('y', (d:any) => d.y + 330)
+          .duration(t)
+    this.svgElements.linesArticle
+          .transition()
+          .attr('x1', (d:any) => d.x)
+          .attr('y1', (d:any) => d.y + d.style.height - 50)
+          .attr('x2', (d:any) => d.x + d.style.width)
+          .attr('y2', (d:any) => d.y + d.style.height - 50)
+          .duration(t)
+    this.svgElements.imgsArticleSite
+          .transition()
+          .attr('x', (d:any) => d.x + 8)
+          .attr('y', (d:any) => d.y + d.style.height - 42)
+          .duration(t)
+    this.svgElements.textsArticleSite
+          .transition()
+          .attr('x', (d:any) => d.x + 50)
+          .attr('y', (d:any) => d.y + d.style.height - 16)
+          .duration(t)
+    this.svgElements.textsArticleTime
+          .transition()
+          .attr('x', (d:any) => d.x + d.style.width - 190)
+          .attr('y', (d:any) => d.y + d.style.height - 16)
+          .duration(t)
+    this.svgElements.editLinksArticle
+          .transition()
+          .attr('x', (d:any) => d.x + d.style.width - 50)
+          .attr('y', (d:any) => d.y + d.style.height - 16)
+          .duration(t)
+    this.svgElements.textsArticleMenu
+          .transition()
+          .attr('x', (d:any) => d.x + d.style.width - 15)
+          .attr('y', (d:any) => d.y + d.style.height - 25)
+          .duration(t)
   }
 
   ticked () {
     this.collide(1)
 
-    this.svgElements.links
-    			.attr('x1', (d:any) => d.x + d.style.width/2 )
-    			.attr('y1', (d:any) => d.y + d.style.height/2 )
-    			.attr('x2', (d:any) => { let p=this.parentOfElement(d); return p.x + p.style.width /2; })
-    			.attr('y2', (d:any) => { let p=this.parentOfElement(d); return p.y + p.style.height /2; });
-    this.svgElements.articles
-          .attr('x', (d:any) => d.x)
-          .attr('y', (d:any) => d.y);
-    this.svgElements.imgsArticle
-          .attr('x', (d:any) => d.x+1)
-          .attr('y', (d:any) => d.y+1);
-    this.svgElements.textsArticleTitle
-          .attr('x', (d:any) => d.x)
-          .attr('y', (d:any) => d.y);
-    this.svgElements.tspansArticleTitle1
-          .attr('x', (d:any) => d.x)
-          .attr('y', (d:any) => d.y + 250);
-    this.svgElements.tspansArticleTitle2
-          .attr('x', (d:any) => d.x)
-          .attr('y', (d:any) => d.y + 250);
-    this.svgElements.textsArticleBody
-          .attr('x', (d:any) => d.x)
-          .attr('y', (d:any) => d.y + 40);
-    this.svgElements.tspansArticleBody1
-          .attr('x', (d:any) => d.x)
-          .attr('y', (d:any) => d.y + 330);
-    this.svgElements.tspansArticleBody2
-          .attr('x', (d:any) => d.x)
-          .attr('y', (d:any) => d.y + 330);
-    this.svgElements.tspansArticleBody3
-          .attr('x', (d:any) => d.x)
-          .attr('y', (d:any) => d.y + 330);
-    this.svgElements.tspansArticleBody4
-          .attr('x', (d:any) => d.x)
-          .attr('y', (d:any) => d.y + 330);
-    this.svgElements.linesArticle
-          .attr('x1', (d:any) => d.x)
-          .attr('y1', (d:any) => d.y + d.style.height - 50)
-          .attr('x2', (d:any) => d.x + d.style.width)
-          .attr('y2', (d:any) => d.y + d.style.height - 50);
-    this.svgElements.imgsArticleSite
-          .attr('x', (d:any) => d.x + 8)
-          .attr('y', (d:any) => d.y + d.style.height - 42);
-    this.svgElements.textsArticleSite
-          .attr('x', (d:any) => d.x + 50)
-          .attr('y', (d:any) => d.y + d.style.height - 16);
-    this.svgElements.textsArticleTime
-          .attr('x', (d:any) => d.x + d.style.width - 190)
-          .attr('y', (d:any) => d.y + d.style.height - 16);
-    this.svgElements.editLinksArticle
-          .attr('x', (d:any) => d.x + d.style.width - 50)
-          .attr('y', (d:any) => d.y + d.style.height - 16);
-    this.svgElements.textsArticleMenu
-          .attr('x', (d:any) => d.x + d.style.width - 15)
-          .attr('y', (d:any) => d.y + d.style.height - 25);
+    // this.svgElements.links
+    // 			.attr('x1', (d:any) => d.x + d.style.width/2 )
+    // 			.attr('y1', (d:any) => d.y + d.style.height/2 )
+    // 			.attr('x2', (d:any) => { let p=this.parentOfElement(d); return p.x + p.style.width /2; })
+    // 			.attr('y2', (d:any) => { let p=this.parentOfElement(d); return p.y + p.style.height /2; });
+    // this.svgElements.articles
+    //       .attr('x', (d:any) => d.x)
+    //       .attr('y', (d:any) => d.y);
+    // this.svgElements.imgsArticle
+    //       .attr('x', (d:any) => d.x+1)
+    //       .attr('y', (d:any) => d.y+1);
+    // this.svgElements.textsArticleTitle
+    //       .attr('x', (d:any) => d.x)
+    //       .attr('y', (d:any) => d.y);
+    // this.svgElements.tspansArticleTitle1
+    //       .attr('x', (d:any) => d.x)
+    //       .attr('y', (d:any) => d.y + 250);
+    // this.svgElements.tspansArticleTitle2
+    //       .attr('x', (d:any) => d.x)
+    //       .attr('y', (d:any) => d.y + 250);
+    // this.svgElements.textsArticleBody
+    //       .attr('x', (d:any) => d.x)
+    //       .attr('y', (d:any) => d.y + 40);
+    // this.svgElements.tspansArticleBody1
+    //       .attr('x', (d:any) => d.x)
+    //       .attr('y', (d:any) => d.y + 330);
+    // this.svgElements.tspansArticleBody2
+    //       .attr('x', (d:any) => d.x)
+    //       .attr('y', (d:any) => d.y + 330);
+    // this.svgElements.tspansArticleBody3
+    //       .attr('x', (d:any) => d.x)
+    //       .attr('y', (d:any) => d.y + 330);
+    // this.svgElements.tspansArticleBody4
+    //       .attr('x', (d:any) => d.x)
+    //       .attr('y', (d:any) => d.y + 330);
+    // this.svgElements.linesArticle
+    //       .attr('x1', (d:any) => d.x)
+    //       .attr('y1', (d:any) => d.y + d.style.height - 50)
+    //       .attr('x2', (d:any) => d.x + d.style.width)
+    //       .attr('y2', (d:any) => d.y + d.style.height - 50);
+    // this.svgElements.imgsArticleSite
+    //       .attr('x', (d:any) => d.x + 8)
+    //       .attr('y', (d:any) => d.y + d.style.height - 42);
+    // this.svgElements.textsArticleSite
+    //       .attr('x', (d:any) => d.x + 50)
+    //       .attr('y', (d:any) => d.y + d.style.height - 16);
+    // this.svgElements.textsArticleTime
+    //       .attr('x', (d:any) => d.x + d.style.width - 190)
+    //       .attr('y', (d:any) => d.y + d.style.height - 16);
+    // this.svgElements.editLinksArticle
+    //       .attr('x', (d:any) => d.x + d.style.width - 50)
+    //       .attr('y', (d:any) => d.y + d.style.height - 16);
+    // this.svgElements.textsArticleMenu
+    //       .attr('x', (d:any) => d.x + d.style.width - 15)
+    //       .attr('y', (d:any) => d.y + d.style.height - 25);
 
 
     this.svgElements.ellipses
