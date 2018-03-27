@@ -50,6 +50,8 @@ export class ArticleService {
 
   public static initNodes(data, currentView, stateView: boolean, query: any) {
     let nodes = [], nodeIndex = 0;
+    let article_count = data.length
+    console.log('__________ article count ' + article_count)
     let focusedGroup = null;
     if(currentView == 'FOCUS' && data.length > 0) {
       if(query.user) {
@@ -117,7 +119,10 @@ export class ArticleService {
       if(currentView == 'DEFAULT') { // fx means offset
         // article.fx = article.x = i % 2 ? 620 : 0;
         // article.fy = article.y = i * 620;
-        article.fx = article.x = i * 620;
+        if (i < (article_count-2))
+          article.fx = article.x = i * 620;
+        else
+          article.fx = article.x = (i - article_count) * 620;
         article.fy = article.y = 0;
       }
       else if(currentView == 'FOCUS') {

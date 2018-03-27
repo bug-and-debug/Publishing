@@ -649,8 +649,24 @@ export class D3Service {
     if(this.currentArticleIndex >= articleIndices.length) this.currentArticleIndex = 0
 
     //this.translateViewTo(this.nodes[articleIndices[this.currentArticleIndex]].x, this.nodes[articleIndices[this.currentArticleIndex]].y)
-    articleIndices.forEach(articleIndex => {
-      this.nodes[articleIndex].x = this.nodes[articleIndex].x - 620 * (direction ? 1: -1)
+    let article_count = articleIndices.length
+    articleIndices.forEach((nodeIndex, articleIndex) => {
+      let offset_from_center = 0
+      if (articleIndex - this.currentArticleIndex >= 0) {
+        if ((articleIndex - this.currentArticleIndex) >= (article_count - 2)) {
+          offset_from_center = articleIndex - this.currentArticleIndex - article_count
+        } else {
+          offset_from_center = articleIndex - this.currentArticleIndex
+        }
+      } else {
+        if ((article_count - this.currentArticleIndex + articleIndex) < (article_count - 2)) {
+          offset_from_center = article_count - this.currentArticleIndex + articleIndex
+        } else {
+          offset_from_center = articleIndex - this.currentArticleIndex
+        }
+      }
+
+      this.nodes[nodeIndex].x = offset_from_center * 620
     })
 
     this.updateArticlePosition()
