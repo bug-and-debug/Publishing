@@ -200,6 +200,9 @@ export class LandingComponent {
   draw(articles) {
     this.data = articles;
     this.nodes = ArticleService.initNodes(articles, this.query['currentView'], this.query['stateView'], this.query);
+
+    console.log('______________________ nodes _______________________')
+    console.log(this.nodes)
     this.d3Service.start(this.nodes, this.getArticleIndex(this.query.article));
   }
   getArticleIndex(slug) {
@@ -232,8 +235,7 @@ export class LandingComponent {
       }, () => {
         this.loadingSpinnerService.hide();
       });
-    }
-    else {
+    } else {
       this.draw(this.data);
     }
   }

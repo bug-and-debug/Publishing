@@ -20,7 +20,7 @@ export class D3Service {
       textsEllipse: null,
   	articles: null,
       textsArticleTitle: null, tspansArticleTitle1: null, tspansArticleTitle2: null,
-      textsArticleBody: null, tspansArticleBody1: null, tspansArticleBody2: null,
+      textsArticleBody: null, tspansArticleBody1: null, tspansArticleBody2: null, tspansArticleBody3: null, tspansArticleBody4: null,
       imgsArticle: null, imgsArticleSite: null, textsArticleSite: null,
       linesArticle: null,
       textsArticleTime: null, editLinksArticle: null, textsArticleMenu: null,
@@ -77,10 +77,13 @@ export class D3Service {
             y: d3.event.transform.y
           }
           this.translateView();
-        }).filter( ()=> {
+        })
+        .filter( ()=> {
           if( d3.event instanceof WheelEvent) return d3.event.ctrlKey;
           return true;
-        }).scaleExtent([0.5, 1.75]);
+        })
+        .scaleExtent([0.5, 1.75]);
+
       this.svgContainer.call(this.zoom)
         .on("dblclick.zoom", null)
         .on("wheel", () => {
@@ -120,15 +123,8 @@ export class D3Service {
 
     this.svg = this.svgContainer.append('g');
 
-
-
     this.simulation = d3.forceSimulation()
-      .velocityDecay(0.9999)
-      //.alphaDecay(0.001)
-      .force("cluster", (alpha) => this.clustering(alpha))
-      //.force("bound", (alpha)=> this.bound(0.2))
-      //.force("collide", (alpha) => this.collide(0.2))
-      ;
+      .force("cluster", (alpha) => this.clustering(alpha));
 
 
     this.contextMenu = new D3ContextMenu(this.svg, [{id: 'AGREE_DISAGREE', label: 'Agree/Disagree'}, {id: 'DRILL_DOWN', label: 'Drill down'}]);
@@ -183,7 +179,7 @@ export class D3Service {
       let x0 = x
       let y0 = y
       if(withAnimation) {
-        this.svgContainer.transition().duration(750).call(this.zoom.translateTo, x0, y0)
+        this.svgContainer.transition().duration(450).call(this.zoom.translateTo, x0, y0)
           .on('start', () => {
             this.isInTransition = true
           })
@@ -216,9 +212,8 @@ export class D3Service {
 
   	this.svg.selectAll('*').remove();
 
-  	this.initNodes();
-
-  	this.visualize();
+  	this.initNodes(); // define collide nodes
+  	this.visualize(); //
 
     this.currentArticleIndex = isNaN(articleIndex) ? 0 : parseInt(articleIndex);
 
@@ -251,7 +246,6 @@ export class D3Service {
     });
   }
 
-
   reskinNodes(nodes) {
     let that = this;
 
@@ -262,7 +256,7 @@ export class D3Service {
 
     this.svgElements.links
         .style("stroke-width", (d:any) => d.nodeData.link.width + 'px')
-        .style("stroke", (d:any) => d.nodeData.link.color);
+        .style("stroke", (d:any) => 'd.nodeData.link.color');
 
     this.svgElements.articles
         .attr('width', (d:any) => d.style.width)
@@ -270,8 +264,8 @@ export class D3Service {
         .style("fill", (d:any) => d.style.color);
 
     this.svgElements.imgsArticle
-        .attr('width', (d:any) => d.style.height - 35)
-        .attr('height', (d:any) => d.style.height - 35);
+        .attr('width', (d:any) => d.style.height)
+        .attr('height', (d:any) => d.style.height - 250);
 
     this.svgElements.ellipses
       .style("fill", (d:any) => d.style.color);
@@ -299,14 +293,12 @@ export class D3Service {
   visualize() {
     let that = this;
 
-    this.simulation.nodes(this.nodes)
-      .on("tick", () => this.ticked());
-
     this.svgElements.links = this.svg
     	.datum(this.nodes.filter((d:any) => d.nodeData.link != null))
     	.selectAll('.link')
     	.data((d:any) => d)
-    	.enter().append('line');
+    	.enter()
+      .append('line')
 
     this.svgElements.articles = this.svg.append('g')
         .datum(this.nodes.filter(d=> d.shape == 'article'))
@@ -343,14 +335,16 @@ export class D3Service {
     this.svgElements.tspansArticleTitle1 = this.svgElements.textsArticleTitle
           .append('tspan')
           .attr('x', 0)
-          .attr('dy', 15)
-          .text((d:any) => d.title.substring(0,35))
+          .attr('dx', 10)
+          .attr('dy', 30)
+          .text((d:any) => d.title.substring(0,37))
           .attr('data-index', (d:any) => d.nodeData.nodeIndex);
     this.svgElements.tspansArticleTitle2 = this.svgElements.textsArticleTitle
           .append('tspan')
           .attr('x', 0)
-          .attr('dy', 30)
-          .text((d:any) => _.truncate(d.title.substring(35), {'length': 35}))
+          .attr('dx', 10)
+          .attr('dy', 60)
+          .text((d:any) => _.truncate(d.title.substring(37), {'length': 37}))
           .attr('data-index', (d:any) => d.nodeData.nodeIndex);
     this.svgElements.textsArticleBody = this.svg.append('g')
         .datum(this.nodes.filter(d=> d.shape == 'article'))
@@ -365,14 +359,32 @@ export class D3Service {
     this.svgElements.tspansArticleBody1 = this.svgElements.textsArticleBody
           .append('tspan')
           .attr('x', 0)
+          .attr('dx', 10)
           .attr('dy', 15)
-          .text((d:any) => d.body.substring(0,42))
+          .text((d:any) => d.body.substring(0,55))
           .attr('data-index', (d:any) => d.nodeData.nodeIndex);
     this.svgElements.tspansArticleBody2 = this.svgElements.textsArticleBody
           .append('tspan')
           .attr('x', 0)
-          .attr('dy', 30)
-          .text((d:any) => _.truncate(d.body.substring(42), {'length': 42}))
+          .attr('dx', 10)
+          .attr('dy', 36)
+          .text((d:any) => d.body.substring(55, 110))
+          .attr('data-index', (d:any) => d.nodeData.nodeIndex);
+
+    this.svgElements.tspansArticleBody3 = this.svgElements.textsArticleBody
+          .append('tspan')
+          .attr('x', 0)
+          .attr('dx', 10)
+          .attr('dy', 57)
+          .text((d:any) => d.body.substring(110, 165))
+          .attr('data-index', (d:any) => d.nodeData.nodeIndex);
+
+    this.svgElements.tspansArticleBody4 = this.svgElements.textsArticleBody
+          .append('tspan')
+          .attr('x', 0)
+          .attr('dx', 10)
+          .attr('dy', 78)
+          .text((d:any) => _.truncate(d.body.substring(165), {'length': 55}))
           .attr('data-index', (d:any) => d.nodeData.nodeIndex);
 
     this.svgElements.linesArticle = this.svg.append('g')
@@ -382,7 +394,7 @@ export class D3Service {
         .enter().append('line')
         .attr('class', 'articleLine')
         .attr('stroke-width', 1)
-        .attr('stroke', '#c2c5c7')
+        .attr('stroke', '#a2a5a7')
         .attr('id', (d:any) => 'articleLine' + d.nodeData.nodeIndex)
         .attr('data-index', (d:any) => d.nodeData.nodeIndex)
         .attr('data-id', (d:any) => d._id);
@@ -397,8 +409,8 @@ export class D3Service {
         .attr('id', (d:any) => 'articleSiteImg' + d.nodeData.nodeIndex)
         .attr('data-index', (d:any) => d.nodeData.nodeIndex)
         .attr('data-id', (d:any) => d._id)
-        .attr('width', 25)
-        .attr('height', 25);
+        .attr('width', 34)
+        .attr('height', 34);
 
     this.svgElements.textsArticleSite = this.svg.append('g')
         .datum(this.nodes.filter(d=> d.shape == 'article'))
@@ -616,6 +628,8 @@ export class D3Service {
 
     this.simulation.restart();
     this.simulation.alpha(1);
+    this.simulation.nodes(this.nodes)
+      .on("tick", () => this.ticked());
   }
 
   dropShowable(d:any) {
@@ -628,31 +642,18 @@ export class D3Service {
 
   viewNextArticle(direction /* boolean: true - next, false - prev) */) {
     if(this.isInTransition) return;
-    // let currentArticleIndex = 0;
-    // let x0 = 0 - this.transform.x - this.width / 2 * this.transform.k,      x1 = x0 + this.width * this.transform.k,
-    //     y0 = 0 - this.transform.y - this.height / 2 * this.transform.k,     y1 = y0 + this.height * this.transform.k
     let articleIndices = Object.keys(this.collisionNodes)
-    // for(let i=0; i<articleIndices.length; i++) {
-    //   let article = this.nodes[articleIndices[i]]
-    //   if(article.x >= x0 && article.x <= x1 && article.y >= y0 && article.y <= y1) {
-    //     currentArticleIndex = i
-    //     break
-    //   }
-    // }
     this.currentArticleIndex = this.currentArticleIndex + (direction ? 1 : -1)
-    if(this.currentArticleIndex < 0) this.currentArticleIndex = this.currentArticleIndex = articleIndices.length - 1
+    if(this.currentArticleIndex < 0) this.currentArticleIndex = articleIndices.length - 1
     if(this.currentArticleIndex >= articleIndices.length) this.currentArticleIndex = 0
 
     this.translateViewTo(this.nodes[articleIndices[this.currentArticleIndex]].x, this.nodes[articleIndices[this.currentArticleIndex]].y)
-
     this.listeners.article_navigate.func.call(this.listeners.article_navigate.context, this.currentArticleIndex)
   }
 
   ticked () {
-    // this.bubbleSwitch(1)
     this.collide(1)
-    // this.bound(1)
-    // this.bubbleSwitch(1)
+
     this.svgElements.links
     			.attr('x1', (d:any) => d.x + d.style.width/2 )
     			.attr('y1', (d:any) => d.y + d.style.height/2 )
@@ -668,40 +669,46 @@ export class D3Service {
           .attr('x', (d:any) => d.x)
           .attr('y', (d:any) => d.y);
     this.svgElements.tspansArticleTitle1
-          .attr('x', (d:any) => d.x + 125)
-          .attr('y', (d:any) => d.y);
+          .attr('x', (d:any) => d.x)
+          .attr('y', (d:any) => d.y + 250);
     this.svgElements.tspansArticleTitle2
-          .attr('x', (d:any) => d.x + 125)
-          .attr('y', (d:any) => d.y);
+          .attr('x', (d:any) => d.x)
+          .attr('y', (d:any) => d.y + 250);
     this.svgElements.textsArticleBody
           .attr('x', (d:any) => d.x)
           .attr('y', (d:any) => d.y + 40);
     this.svgElements.tspansArticleBody1
-          .attr('x', (d:any) => d.x + 125)
-          .attr('y', (d:any) => d.y + 40);
+          .attr('x', (d:any) => d.x)
+          .attr('y', (d:any) => d.y + 330);
     this.svgElements.tspansArticleBody2
-          .attr('x', (d:any) => d.x + 125)
-          .attr('y', (d:any) => d.y + 40);
+          .attr('x', (d:any) => d.x)
+          .attr('y', (d:any) => d.y + 330);
+    this.svgElements.tspansArticleBody3
+          .attr('x', (d:any) => d.x)
+          .attr('y', (d:any) => d.y + 330);
+    this.svgElements.tspansArticleBody4
+          .attr('x', (d:any) => d.x)
+          .attr('y', (d:any) => d.y + 330);
     this.svgElements.linesArticle
           .attr('x1', (d:any) => d.x)
-          .attr('y1', (d:any) => d.y + d.style.height - 33)
+          .attr('y1', (d:any) => d.y + d.style.height - 50)
           .attr('x2', (d:any) => d.x + d.style.width)
-          .attr('y2', (d:any) => d.y + d.style.height - 33);
+          .attr('y2', (d:any) => d.y + d.style.height - 50);
     this.svgElements.imgsArticleSite
-          .attr('x', (d:any) => d.x + 5)
-          .attr('y', (d:any) => d.y + d.style.height - 30);
+          .attr('x', (d:any) => d.x + 8)
+          .attr('y', (d:any) => d.y + d.style.height - 42);
     this.svgElements.textsArticleSite
-          .attr('x', (d:any) => d.x + 35)
+          .attr('x', (d:any) => d.x + 50)
           .attr('y', (d:any) => d.y + d.style.height - 16);
     this.svgElements.textsArticleTime
-          .attr('x', (d:any) => d.x + d.style.width - 145)
+          .attr('x', (d:any) => d.x + d.style.width - 190)
           .attr('y', (d:any) => d.y + d.style.height - 16);
     this.svgElements.editLinksArticle
-          .attr('x', (d:any) => d.x + d.style.width - 30)
+          .attr('x', (d:any) => d.x + d.style.width - 50)
           .attr('y', (d:any) => d.y + d.style.height - 16);
     this.svgElements.textsArticleMenu
-          .attr('x', (d:any) => d.x + d.style.width - 5)
-          .attr('y', (d:any) => d.y + d.style.height - 20);
+          .attr('x', (d:any) => d.x + d.style.width - 15)
+          .attr('y', (d:any) => d.y + d.style.height - 25);
 
 
     this.svgElements.ellipses
@@ -745,14 +752,12 @@ export class D3Service {
             let pullPoint =DataService.pullPoint(parent, node.nodeData.clusterName, node.nodeData.indexInCluster)
             pullX = pullPoint.x;
             pullY = pullPoint.y;
-          }
-          else {
+          } else {
             console.log('This should not happen.');
             pullX = parentCenterX;
             pullY = parentCenterY;
           }
-        }
-        else {
+        } else {
           pullX = parentCenterX;
           pullY = parentCenterY;
         }
@@ -761,8 +766,7 @@ export class D3Service {
         let distance = Math.sqrt(distanceX*distanceX + distanceY*distanceY);
         if (distance==0) {
           // Arrived at the pull point.
-        }
-        else {
+        } else {
           let step = 0.05
           let moveX = (distanceX)  * step * alpha;
           let moveY = (distanceY)  * step * alpha;
@@ -773,20 +777,13 @@ export class D3Service {
       articleIndex =i
     }
   }
+
   collide(alpha/*ignored*/) {
     let articleIndex = this.nextArticle(-1)
     while(articleIndex < this.nodes.length) {
       let nextArticleIndex = this.nextArticle(articleIndex)
 
       for (let i=0; i < nextArticleIndex - articleIndex - 1; i++ ) {
-    //     for (let j=i+1; j <= this.nodes.length - articleIndex/*nextArticleIndex - articleIndex*/  && this.nodes[i].nodeData.clusterName == this.nodes[j].nodeData.clusterName; j++) {
-    //       let oneNode = this.nodes[articleIndex + i]
-    //       let otherNode = j == this.nodes.length - articleIndex ? this.nodes[0] : this.nodes[articleIndex + j]
-    //       if(i != 0 && oneNode.nodeData.parentIndex != otherNode.nodeData.parentIndex && otherNode.nodeData.g != 'g0' && otherNode.nodeData.focused == false) continue;
-      // for(let i = 0; i < this.nodes.length; i++) {
-      //   for(let j = i+1; j < this.nodes.length; j++) {
-      //     let oneNode = this.nodes[i];
-      //     let otherNode = this.nodes[j];
         for(let j = 0; j < this.collisionNodes[articleIndex].length; j++) {
           let oneIndex = articleIndex + i
           let otherIndex = this.collisionNodes[articleIndex][j]
@@ -956,103 +953,6 @@ export class D3Service {
       }
       articleIndex = nextArticleIndex
     }
-  }
-  bound(alpha/*ignored*/) {
-    let articleIndex = this.nextArticle(-1)
-    while(articleIndex < this.nodes.length) {
-      let parent = this.nodes[articleIndex]
-      let i = articleIndex+1
-      for (; i<this.nodes.length && this.nodes[i].shape != 'article'; i++) {
-        let oneNode = this.nodes[i]
-        if ((oneNode.nodeData.parentIndex < 0) || (oneNode.nodeData.parentIndex != articleIndex) || (parent.x == null || parent.y == null || oneNode.x == null || oneNode.y == null)) {
-          continue
-        }
-        if (parent.nodeData.clustersPopulation) {
-          let regionPolygon = DataService.polygon(parent, oneNode.nodeData.clusterName);
-          let parentRectangle = Shapes.rectangle(parent.x, parent.y, parent.style.width, parent.style.height)
-          if (DataService.checkPointInRectangle(new Point2D(oneNode.x, oneNode.y), parentRectangle)) {
-            return
-          }
-          let oneNodeShape = Shapes.rectangle(oneNode.x, oneNode.y, oneNode.style.width, oneNode.style.height)
-          let intersection = Intersection.intersect(oneNodeShape, regionPolygon)
-          let move
-          if (intersection.status == 'Intersection') {
-            // is intersecting with border line, put it inside the region with least amount of move
-            move = DataService.putInside(oneNode, regionPolygon)
-            oneNode.x += move.x
-            oneNode.y += move.y
-          }
-          else {
-            let centerPoint = new Point2D(oneNode.x + oneNode.style.width / 2,
-                                      oneNode.y + oneNode.style.height / 2)
-            if (!DataService.checkPointInPolygon(centerPoint, regionPolygon)) {
-              // is outside, put it inside the region
-              // console.log('Forcefull put inside')
-              let enterPosition = DataService.enterPosition(parent, oneNode.nodeData.clusterName, i)
-              oneNode.x = enterPosition.point.x + enterPosition.widthMultiplier * oneNode.style.width * alpha
-              oneNode.y = enterPosition.point.y + enterPosition.heightMultiplier * oneNode.style.height * alpha
-            }
-          }
-        }
-        else {
-          // parent is a focused group
-        }
-      }
-      articleIndex = i
-    }
-  }
-  bubbleSwitch(alpha/*ignored*/) {
-    let articleIndex = this.nextArticle(-1)
-    while(articleIndex < this.nodes.length) {
-      let nextArticleIndex = this.nextArticle(articleIndex)
-      for (let i=1; i < nextArticleIndex - articleIndex - 1; i++ ) {
-        for (let j=i+1; j < nextArticleIndex - articleIndex; j++) {
-          let oneNode = this.nodes[articleIndex + i]
-          let otherNode = this.nodes[articleIndex + j]
-          if (otherNode.x == null || otherNode.y == null || oneNode.x == null || oneNode.y == null) {
-            console.log('This should not happen')
-            continue
-          }
-
-          let clusters
-          let nodeOne, nodeTwo
-          if (oneNode.nodeData.clusterName < otherNode.nodeData.clusterName) {
-            clusters = [oneNode.nodeData.clusterName, otherNode.nodeData.clusterName]
-            nodeOne = oneNode; nodeTwo = otherNode
-          }
-          else {
-            clusters = [otherNode.nodeData.clusterName, oneNode.nodeData.clusterName]
-            // switch oneNode <--> otherNode
-            nodeOne = otherNode; nodeTwo = oneNode
-          }
-
-          let parentNode = this.nodes[articleIndex]
-
-          if ((clusters[0]=='g11' && clusters[1]=='g6') || (clusters[0]=='g3' && clusters[1]=='g7')) {
-            let pullPoint = DataService.pullPoint(parentNode, clusters[0], 0)
-            let distanceOne = DataService.distance(pullPoint, {x: nodeOne.x + nodeOne.style.width / 2, y: nodeOne.y + nodeOne.style.height / 2})
-            let distanceTwo = DataService.distance(pullPoint, {x: nodeTwo.x + nodeTwo.style.width / 2, y: nodeTwo.y + nodeTwo.style.height / 2})
-            if (distanceOne > distanceTwo + 10) {
-              // switch position
-              let oneCenter = {x: nodeOne.x + nodeOne.style.width/2, y: nodeOne.y + nodeOne.style.height/2}
-              let twoCenter = {x: nodeTwo.x + nodeTwo.style.width/2, y: nodeTwo.y + nodeTwo.style.height/2}
-              nodeOne.x = twoCenter.x - nodeOne.style.width/2
-              nodeOne.y = twoCenter.y - nodeOne.style.height/2
-              nodeTwo.x = oneCenter.x - nodeTwo.style.width/2
-              nodeTwo.y = oneCenter.y - nodeTwo.style.height/2
-            }
-          }
-        }
-      }
-      articleIndex = nextArticleIndex
-    }
-  }
-
-  xCenter(d:any) {
-    return d.x + d.vx + d.style.width / 2;
-  }
-  yCenter(d:any) {
-    return d.y + d.vy + d.style.height / 2;
   }
 
   parentOfElement(d:any) {

@@ -49,12 +49,6 @@ export class ArticleService {
 
 
   public static initNodes(data, currentView, stateView: boolean, query: any) {
-
-    console.log(data)
-    // console.log(this.query['stateView'])
-    // console.log(this.nodes)
-
-
     let nodes = [], nodeIndex = 0;
     let focusedGroup = null;
     if(currentView == 'FOCUS' && data.length > 0) {
@@ -120,9 +114,11 @@ export class ArticleService {
         link: currentView == 'FOCUS' ? { width: 3, color: '#ccc'} : null,
         movable: false
       }
-      if(currentView == 'DEFAULT') {
-        article.fx = article.x = i % 2 ? 400 : 0;
-        article.fy = article.y = i * 500;
+      if(currentView == 'DEFAULT') { // fx means offset
+        // article.fx = article.x = i % 2 ? 620 : 0;
+        // article.fy = article.y = i * 620;
+        article.fx = article.x = i * 620;
+        article.fy = article.y = 0;
       }
       else if(currentView == 'FOCUS') {
         let countAround = 4
@@ -236,6 +232,7 @@ export class ArticleService {
         nodeIndex ++;
         return d;
       }));
+
       newNodes.forEach((newNode, index) => {
         newNode.shape = DataService.SHAPES[newNode.nodeData.g]
         newNode.style = ArticleService.getStyle(newNode, stateView)

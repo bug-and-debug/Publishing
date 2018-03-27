@@ -57,7 +57,7 @@ export class DataService {
   };
 
   public static SIZES: any = {
-    g0: { font: 14, width: 400, height: 150},
+    g0: { font: 14, width: 500, height: 500},
     g1: { font: { min: 10, max: 24} },
     g2: { font: { min: 10, max: 18} },
     g3: { font: { min: 10, max: 24} },
@@ -72,6 +72,8 @@ export class DataService {
     g22: { font: { min: 10, max: 24} },  //location
     g100: { width: 900, height: 600 }
   };
+
+  public static CAROUSEL_SIZE = 5
 
   public static regionDiameter = 200
 
@@ -104,16 +106,16 @@ export class DataService {
       let rightPoint = new Point2D(article.x + article.style.width - toplineOffset + permitOffset, article.y + permitOffset)
       let leftFarPoint = new Point2D(leftPoint.x - Math.cos(upperLineAngle) * farArmLength - permitOffset,
                                  leftPoint.y - Math.sin(upperLineAngle) * farArmLength)
-      let rightFarPoint = new Point2D(rightPoint.x + Math.cos(upperLineAngle) * farArmLength + permitOffset, 
+      let rightFarPoint = new Point2D(rightPoint.x + Math.cos(upperLineAngle) * farArmLength + permitOffset,
                                   leftPoint.y - Math.sin(upperLineAngle) * farArmLength)
       points = [leftFarPoint, leftPoint, rightPoint, rightFarPoint, leftFarPoint]
     }
     else if (group == "g5") {
       let leftPoint = new Point2D(article.x + toplineOffset - permitOffset, article.y + article.style.height - permitOffset)
       let rightPoint = new Point2D(article.x + article.style.width - toplineOffset + permitOffset, article.y + article.style.height - permitOffset)
-      let leftFarPoint = new Point2D(leftPoint.x - Math.cos(upperLineAngle) * farArmLength - permitOffset, 
+      let leftFarPoint = new Point2D(leftPoint.x - Math.cos(upperLineAngle) * farArmLength - permitOffset,
                                  leftPoint.y + Math.sin(upperLineAngle) * farArmLength)
-      let rightFarPoint = new Point2D(rightPoint.x + Math.cos(upperLineAngle) * farArmLength + permitOffset, 
+      let rightFarPoint = new Point2D(rightPoint.x + Math.cos(upperLineAngle) * farArmLength + permitOffset,
                                   rightPoint.y + Math.sin(upperLineAngle) * farArmLength)
       points = [leftFarPoint, leftPoint, rightPoint, rightFarPoint, leftFarPoint]
     }
@@ -137,7 +139,7 @@ export class DataService {
     }
     else if (group == "g1") {
       let topPoint = new Point2D(article.x + toplineOffset + permitOffset, article.y - permitOffset)
-      let topFarPoint = new Point2D(topPoint.x - Math.cos(upperLineAngle) * farArmLength + permitOffset, 
+      let topFarPoint = new Point2D(topPoint.x - Math.cos(upperLineAngle) * farArmLength + permitOffset,
                                 topPoint.y - Math.sin(upperLineAngle) * farArmLength)
       let leftPoint = new Point2D(article.x + permitOffset, article.y + sidelineOffset + permitOffset)
       let leftFarPoint = new Point2D(leftPoint.x - Math.cos(sideLineAngle) * farArmLength,
@@ -147,7 +149,7 @@ export class DataService {
     }
     else if ((group == "g12")) {
       let topPoint = new Point2D(article.x + article.style.width - toplineOffset - permitOffset, article.y + permitOffset)
-      let topFarPoint = new Point2D(topPoint.x + Math.cos(upperLineAngle) * farArmLength - permitOffset, 
+      let topFarPoint = new Point2D(topPoint.x + Math.cos(upperLineAngle) * farArmLength - permitOffset,
                                 topPoint.y - Math.sin(upperLineAngle) * farArmLength)
       let rightPoint = new Point2D(article.x + article.style.width - permitOffset, article.y + sidelineOffset + permitOffset)
       let rightFarPoint = new Point2D(rightPoint.x + Math.cos(sideLineAngle) * farArmLength,
@@ -160,7 +162,7 @@ export class DataService {
       let rightFarPoint = new Point2D(rightPoint.x + Math.cos(sideLineAngle) * farArmLength,
                                   rightPoint.y + Math.sin(sideLineAngle) * farArmLength - permitOffset)
       let bottomPoint = new Point2D(article.x + article.style.width - toplineOffset - permitOffset, article.y + article.style.height - permitOffset)
-      let bottomFarPoint = new Point2D(bottomPoint.x + Math.cos(upperLineAngle) * farArmLength - permitOffset, 
+      let bottomFarPoint = new Point2D(bottomPoint.x + Math.cos(upperLineAngle) * farArmLength - permitOffset,
                                    bottomPoint.y + Math.sin(upperLineAngle) * farArmLength)
       let cornerPoint = new Point2D(article.x + article.style.width - permitOffset, article.y + article.style.height - permitOffset)
       points = [rightPoint, bottomPoint, bottomFarPoint, rightFarPoint, rightPoint]
@@ -170,7 +172,7 @@ export class DataService {
       let leftFarPoint = new Point2D(leftPoint.x - Math.cos(sideLineAngle) * farArmLength,
                                    leftPoint.y + Math.sin(sideLineAngle) * farArmLength - permitOffset)
       let rightPoint = new Point2D(article.x + toplineOffset + permitOffset, article.y + article.style.height - permitOffset)
-      let rightFarPoint = new Point2D(rightPoint.x - Math.cos(upperLineAngle) * farArmLength + permitOffset, 
+      let rightFarPoint = new Point2D(rightPoint.x - Math.cos(upperLineAngle) * farArmLength + permitOffset,
                                   rightPoint.y + Math.sin(upperLineAngle) * farArmLength)
       let cornerPoint = new Point2D(article.x + permitOffset, article.y + article.style.height - permitOffset)
       points = [leftPoint, rightPoint, rightFarPoint, leftFarPoint, leftPoint]
@@ -179,7 +181,7 @@ export class DataService {
       let leftPoint = new Point2D(article.x + article.style.width/2, article.y)
       let leftFarPoint = new Point2D(article.x + article.style.width/2, article.y - farArmLength)
       let rightPoint = new Point2D(article.x, article.y + article.style.height)
-      let rightFarPoint = new Point2D(rightPoint.x - Math.cos(sideLineAngle) * farArmLength, 
+      let rightFarPoint = new Point2D(rightPoint.x - Math.cos(sideLineAngle) * farArmLength,
                                   rightPoint.y + Math.sin(sideLineAngle) * farArmLength)
       let cornerPoint = new Point2D(rightFarPoint.x, leftFarPoint.y)
       points = [leftPoint, rightPoint, rightFarPoint, cornerPoint, leftFarPoint]
@@ -188,29 +190,30 @@ export class DataService {
       let leftPoint = new Point2D(article.x + article.style.width/2, article.y)
       let leftFarPoint = new Point2D(article.x + article.style.width/2, article.y - farArmLength)
       let rightPoint = new Point2D(article.x + article.style.width, article.y + article.style.height)
-      let rightFarPoint = new Point2D(rightPoint.x + Math.cos(sideLineAngle) * farArmLength, 
+      let rightFarPoint = new Point2D(rightPoint.x + Math.cos(sideLineAngle) * farArmLength,
                                   rightPoint.y + Math.sin(sideLineAngle) * farArmLength)
       let cornerPoint = new Point2D(rightFarPoint.x, leftFarPoint.y)
       points = [leftPoint, rightPoint, rightFarPoint, cornerPoint, leftFarPoint]
     }
     else if (group == "S3") {
       let leftPoint = new Point2D(article.x, article.y + article.style.height)
-      let leftFarPoint = new Point2D(leftPoint.x - Math.cos(sideLineAngle) * farArmLength, 
+      let leftFarPoint = new Point2D(leftPoint.x - Math.cos(sideLineAngle) * farArmLength,
                                   leftPoint.y + Math.sin(sideLineAngle) * farArmLength)
       let rightPoint = new Point2D(article.x + article.style.width, article.y + article.style.height)
-      let rightFarPoint = new Point2D(rightPoint.x + Math.cos(sideLineAngle) * farArmLength, 
+      let rightFarPoint = new Point2D(rightPoint.x + Math.cos(sideLineAngle) * farArmLength,
                                   rightPoint.y + Math.sin(sideLineAngle) * farArmLength)
       points = [leftPoint, leftFarPoint, rightFarPoint, rightPoint]
     }
     return Shapes.polyline(this.convertPointsToNums(points))
   }
+
   public static enterPosition(article:any, group:any, index: any) { // {point, widthMultiplier, heightMultiplier}
     let farArmLength = this.regionDiameter * 1.5
 
     let upperLineAngle = 50 * Math.PI / 180 // degrees
     let sideLineAngle = 15 * Math.PI / 180 // degrees
 
-    let toplineOffset = 44;
+    let toplineOffset = 154;
     let sidelineOffset = 45;
 
     let points = []
@@ -222,26 +225,24 @@ export class DataService {
         let len = farArmLength / (group == "g11" ? 2 : 1)
         let leftPoint = new Point2D(article.x + toplineOffset, article.y)
         let rightPoint = new Point2D(article.x + article.style.width - toplineOffset, article.y)
-        let leftFarPoint = new Point2D(leftPoint.x - Math.cos(upperLineAngle) * len, 
+        let leftFarPoint = new Point2D(leftPoint.x - Math.cos(upperLineAngle) * len,
                                    leftPoint.y - Math.sin(upperLineAngle) * len)
-        let rightFarPoint = new Point2D(rightPoint.x + Math.cos(upperLineAngle) * len, 
+        let rightFarPoint = new Point2D(rightPoint.x + Math.cos(upperLineAngle) * len,
                                     leftPoint.y - Math.sin(upperLineAngle) * len)
         points = [rightFarPoint, leftFarPoint]
-        widthMultiplier = -0.5
+        widthMultiplier = -1.5
         heightMultiplier = 0
-      }
-      else if (group == "g5") {
+      } else if (group == "g5") {
         let leftPoint = new Point2D(article.x + toplineOffset, article.y + article.style.height)
         let rightPoint = new Point2D(article.x + article.style.width - toplineOffset, article.y + article.style.height)
-        let leftFarPoint = new Point2D(leftPoint.x - Math.cos(upperLineAngle) * farArmLength, 
+        let leftFarPoint = new Point2D(leftPoint.x - Math.cos(upperLineAngle) * farArmLength,
                                    leftPoint.y + Math.sin(upperLineAngle) * farArmLength)
-        let rightFarPoint = new Point2D(rightPoint.x + Math.cos(upperLineAngle) * farArmLength, 
+        let rightFarPoint = new Point2D(rightPoint.x + Math.cos(upperLineAngle) * farArmLength,
                                     rightPoint.y + Math.sin(upperLineAngle) * farArmLength)
         points = [rightFarPoint, leftFarPoint]
         widthMultiplier = -0.5
         heightMultiplier = -1
-      }
-      else if (group == "g4") {
+      } else if (group == "g4") {
         let topPoint = new Point2D(article.x, article.y + sidelineOffset)
         let bottomPoint = new Point2D(article.x, article.y + article.style.height - sidelineOffset)
         let topFarPoint = new Point2D(topPoint.x - Math.cos(sideLineAngle) * farArmLength,
@@ -251,8 +252,7 @@ export class DataService {
         points = [bottomFarPoint, topFarPoint]
         widthMultiplier = -0.8
         heightMultiplier = -0.5
-      }
-      else if (group == "g2") {
+      } else if (group == "g2") {
         let topPoint = new Point2D(article.x + article.style.width, article.y + sidelineOffset)
         let bottomPoint = new Point2D(article.x + article.style.width, article.y + article.style.height - sidelineOffset)
         let topFarPoint = new Point2D(topPoint.x + Math.cos(sideLineAngle) * farArmLength,
@@ -262,11 +262,10 @@ export class DataService {
         points = [bottomFarPoint, topFarPoint]
         widthMultiplier = -0.2
         heightMultiplier = -0.5
-      }
-      else if (group == "g1") {
+      } else if (group == "g1") {
         let len = farArmLength / (index % 2 ? 2 : 1)
         let topPoint = new Point2D(article.x + toplineOffset, article.y)
-        let topFarPoint = new Point2D(topPoint.x - Math.cos(upperLineAngle) * len, 
+        let topFarPoint = new Point2D(topPoint.x - Math.cos(upperLineAngle) * len,
                                   topPoint.y - Math.sin(upperLineAngle) * len)
         let leftPoint = new Point2D(article.x, article.y + sidelineOffset)
         let leftFarPoint = new Point2D(leftPoint.x - Math.cos(sideLineAngle) * len,
@@ -275,11 +274,10 @@ export class DataService {
         points = [leftFarPoint,topFarPoint]
         widthMultiplier = 0
         heightMultiplier = 0
-      }
-      else if ((group == "g12")) {
+      } else if ((group == "g12")) {
         let len = farArmLength / (index % 2 ? 2 : 1)
         let topPoint = new Point2D(article.x + article.style.width - toplineOffset, article.y)
-        let topFarPoint = new Point2D(topPoint.x + Math.cos(upperLineAngle) * len, 
+        let topFarPoint = new Point2D(topPoint.x + Math.cos(upperLineAngle) * len,
                                   topPoint.y - Math.sin(upperLineAngle) * len)
         let rightPoint = new Point2D(article.x + article.style.width, article.y + sidelineOffset)
         let rightFarPoint = new Point2D(rightPoint.x + Math.cos(sideLineAngle) * len,
@@ -288,79 +286,73 @@ export class DataService {
         points = [rightFarPoint,topFarPoint]
         widthMultiplier = -0.5
         heightMultiplier = -0.5
-      }
-      else if ((group == "g13") || (group=="g21") || (group=="g22")) {
+      } else if ((group == "g13") || (group=="g21") || (group=="g22")) {
         let len = farArmLength / (group == "g13" ? 2 : 1)
         let rightPoint = new Point2D(article.x + article.style.width, article.y + article.style.height - sidelineOffset)
         let rightFarPoint = new Point2D(rightPoint.x + Math.cos(sideLineAngle) * len,
                                     rightPoint.y + Math.sin(sideLineAngle) * len)
         let bottomPoint = new Point2D(article.x + article.style.width - toplineOffset, article.y + article.style.height)
-        let bottomFarPoint = new Point2D(bottomPoint.x + Math.cos(upperLineAngle) * len, 
+        let bottomFarPoint = new Point2D(bottomPoint.x + Math.cos(upperLineAngle) * len,
                                      bottomPoint.y + Math.sin(upperLineAngle) * len)
         let cornerPoint = new Point2D(article.x + article.style.width, article.y + article.style.height)
         points = [bottomFarPoint, rightFarPoint]
         widthMultiplier = -1
         heightMultiplier = -1
-      }
-      else if ((group == "g3") || (group == "g7")) {
+      } else if ((group == "g3") || (group == "g7")) {
         let len = farArmLength / (group == "g3" ? 2 : 1)
         let leftPoint = new Point2D(article.x, article.y + article.style.height - sidelineOffset)
         let leftFarPoint = new Point2D(leftPoint.x - Math.cos(sideLineAngle) * len,
                                      leftPoint.y + Math.sin(sideLineAngle) * len)
         let rightPoint = new Point2D(article.x + toplineOffset, article.y + article.style.height)
-        let rightFarPoint = new Point2D(rightPoint.x - Math.cos(upperLineAngle) * len, 
+        let rightFarPoint = new Point2D(rightPoint.x - Math.cos(upperLineAngle) * len,
                                     rightPoint.y + Math.sin(upperLineAngle) * len)
         points = [rightFarPoint, leftFarPoint]
         widthMultiplier = 0
         heightMultiplier = -1
-      }
-      else if (group == "S1") {
+      } else if (group == "S1") {
         let articlePoint = new Point2D(article.x, article.y)
         let leftPoint = new Point2D(article.x + article.style.width/2, article.y)
         let leftFarPoint = new Point2D(article.x + article.style.width/2, article.y - farArmLength)
         let leftFarPoint1 = new Point2D(article.x + article.style.width/4, article.y - farArmLength)
         let rightPoint = new Point2D(article.x, article.y + article.style.height)
-        let rightFarPoint = new Point2D(rightPoint.x - Math.cos(sideLineAngle) * farArmLength, 
+        let rightFarPoint = new Point2D(rightPoint.x - Math.cos(sideLineAngle) * farArmLength,
                                     rightPoint.y + Math.sin(sideLineAngle) * farArmLength)
-        let rightFarPoint1 = new Point2D(rightPoint.x - Math.cos(sideLineAngle) * farArmLength, 
+        let rightFarPoint1 = new Point2D(rightPoint.x - Math.cos(sideLineAngle) * farArmLength,
                                     rightPoint.y + Math.sin(sideLineAngle) * farArmLength / 4)
         let cornerPoint = new Point2D(rightFarPoint.x, leftFarPoint.y)
         let startPoints = [leftFarPoint1, cornerPoint, rightFarPoint1];
         let multiplier = [ [-0.3, 1], [0.5, 0.5], [1, -0.5]];
         points = [startPoints[index % startPoints.length]]
         widthMultiplier = multiplier[index % startPoints.length][0];
-        heightMultiplier = multiplier[index % startPoints.length][1]; 
-      }
-      else if (group == "S2") {
+        heightMultiplier = multiplier[index % startPoints.length][1];
+      } else if (group == "S2") {
         let articlePoint = new Point2D(article.x + article.width, article.y)
         let leftPoint = new Point2D(article.x + article.style.width/2, article.y)
         let leftFarPoint = new Point2D(article.x + article.style.width/2, article.y - farArmLength)
         let leftFarPoint1 = new Point2D(article.x + article.style.width*3/4, article.y - farArmLength)
         let rightPoint = new Point2D(article.x + article.style.width, article.y + article.style.height)
-        let rightFarPoint = new Point2D(rightPoint.x + Math.cos(sideLineAngle) * farArmLength, 
+        let rightFarPoint = new Point2D(rightPoint.x + Math.cos(sideLineAngle) * farArmLength,
                                     rightPoint.y + Math.sin(sideLineAngle) * farArmLength)
-        let rightFarPoint1 = new Point2D(rightPoint.x + Math.cos(sideLineAngle) * farArmLength, 
+        let rightFarPoint1 = new Point2D(rightPoint.x + Math.cos(sideLineAngle) * farArmLength,
                                     rightPoint.y + Math.sin(sideLineAngle) * farArmLength / 4)
         let cornerPoint = new Point2D(rightFarPoint.x, leftFarPoint.y)
         let startPoints = [leftFarPoint1, cornerPoint, rightFarPoint1];
         let multiplier = [ [0.3, 1], [-0.5, 0.5], [-1, -0.5]];
         points = [startPoints[index % startPoints.length]]
         widthMultiplier = multiplier[index % startPoints.length][0];
-        heightMultiplier = multiplier[index % startPoints.length][1]; 
-      }
-      else if (group == "S3") {
+        heightMultiplier = multiplier[index % startPoints.length][1];
+      } else if (group == "S3") {
         let leftPoint = new Point2D(article.x, article.y + article.style.height)
-        let leftFarPoint = new Point2D(leftPoint.x - Math.cos(sideLineAngle) * farArmLength, 
+        let leftFarPoint = new Point2D(leftPoint.x - Math.cos(sideLineAngle) * farArmLength,
                                     leftPoint.y + Math.sin(sideLineAngle) * farArmLength)
         let rightPoint = new Point2D(article.x + article.style.width, article.y + article.style.height)
-        let rightFarPoint = new Point2D(rightPoint.x + Math.cos(sideLineAngle) * farArmLength, 
+        let rightFarPoint = new Point2D(rightPoint.x + Math.cos(sideLineAngle) * farArmLength,
                                     rightPoint.y + Math.sin(sideLineAngle) * farArmLength)
         points = [leftFarPoint, rightFarPoint]
         widthMultiplier = 0;
         heightMultiplier = -1;
       }
-    }
-    else if(article.nodeData.g == 'g100') {
+    } else if(article.nodeData.g == 'g100') {
       let groupOrder = ['g11', 'g1', 'g2', 'g3', 'g4', 'g7', 'g6', 'g12', 'g13', 'g21', 'g22'];
       if(group == 'g5') {
         let startsPoints = [ new Point2D(article.x + article.style.width / 4, article.y + article.style.height + farArmLength / 2),
@@ -368,8 +360,7 @@ export class DataService {
         points = [startsPoints[index % startsPoints.length]]
         widthMultiplier = 0.3;
         heightMultiplier = -1;
-      }
-      else {
+      } else {
         points = [new Point2D(article.x + article.style.width + farArmLength  / (groupOrder.indexOf(group) % 2 ? 1 : 2), article.y + article.style.height * 1.5 / (Math.ceil(groupOrder.length/2)) * (Math.floor(groupOrder.indexOf(group)/2)+1))]
         widthMultiplier = -1;
         heightMultiplier = 0;
@@ -377,6 +368,7 @@ export class DataService {
     }
     return {point:this.averagePoint(points), widthMultiplier, heightMultiplier}
   }
+
   public static pullPoint(article:any, group:any, index:any) {
     let point;
     if(article.nodeData.g == 'g0') {
@@ -424,7 +416,7 @@ export class DataService {
         let points = [
           new Point2D(article.x, article.y + article.style.height),
           new Point2D(article.x + article.style.width / 2, article.y + article.style.height),
-          new Point2D(article.x + article.style.width, article.y + article.style.height) 
+          new Point2D(article.x + article.style.width, article.y + article.style.height)
         ];
         point = points[index % points.length]
       }
@@ -442,11 +434,12 @@ export class DataService {
     }
     return point;
   }
+
   public static convertPointsToNums(points) {
     let coords = []
     for (var i = 0; i < points.length; i++) {
       coords.push(points[i].x, points[i].y)
-    }  
+    }
     return coords
   }
   public static checkPointInPolygon(point, polygon) {
@@ -586,4 +579,3 @@ export class DataService {
 
   public static groupDataSet: any = {};
 }
-
