@@ -99,8 +99,8 @@ export class D3Service {
       this.svgContainer.call(this.zoom)
         .on("dblclick.zoom", null)
         .on("wheel", () => {
-          d3.event.preventDefault();
-          this.viewNextArticle(d3.event.deltaY > 0)
+          // d3.event.preventDefault();
+          // this.viewNextArticle(d3.event.deltaY > 0)
         });
 
       d3.select("body").on("keydown", () => {

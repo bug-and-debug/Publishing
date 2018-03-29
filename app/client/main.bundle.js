@@ -2699,8 +2699,8 @@ var D3Service = (function () {
             this.svgContainer.call(this.zoom)
                 .on("dblclick.zoom", null)
                 .on("wheel", function () {
-                __WEBPACK_IMPORTED_MODULE_0_d3_index__["b" /* event */].preventDefault();
-                _this.viewNextArticle(__WEBPACK_IMPORTED_MODULE_0_d3_index__["b" /* event */].deltaY > 0);
+                // d3.event.preventDefault();
+                // this.viewNextArticle(d3.event.deltaY > 0)
             });
             __WEBPACK_IMPORTED_MODULE_0_d3_index__["f" /* select */]("body").on("keydown", function () {
                 if (__WEBPACK_IMPORTED_MODULE_0_d3_index__["b" /* event */].keyCode == 37) {
