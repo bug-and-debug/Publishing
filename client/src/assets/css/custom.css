@@ -42,42 +42,42 @@ svg.d3SvgContainer .articleImage {
 }
 
 svg.d3SvgContainer .articleTitle {
-	font-size: 26px;
+	font-size: 16px;
 	font-weight: regular;
 	fill: #238fce;
 }
 
 svg.d3SvgContainer .articleBody {
-	font-size: 18px;
+	font-size: 11px;
 	fill: #737373;
 }
 
 svg.d3SvgContainer .articleSiteImage {
-	width: 34px;
-	height: 34px;
+	width: 32px;
+	height: 32px;
 }
 
 svg.d3SvgContainer .articleSiteTitle {
 	font-weight: bold;
-	font-size: 16px;
+	font-size: 11px;
 	fill: #333;
 }
 
 svg.d3SvgContainer .articleTime {
-	font-size: 16px;
+	font-size: 11px;
 	font-weight: bold;
 	fill: #737373;
 }
 
 svg.d3SvgContainer .articleEdit {
 	fill: #2a6ba3;
-	font-size: 17px;
+	font-size: 12px;
 	font-weight: bold;
 	text-decoration: underline;
 }
 
 svg.d3SvgContainer .articleMenu {
-	font-size: 28px;
+	font-size: 20px;
 	fill: #737373;
 }
 

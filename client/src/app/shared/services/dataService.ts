@@ -57,7 +57,7 @@ export class DataService {
   };
 
   public static SIZES: any = {
-    g0: { font: 14, width: 500, height: 500},
+    g0: { font: 14, width: 300, height: 300},
     g1: { font: { min: 10, max: 24} },
     g2: { font: { min: 10, max: 18} },
     g3: { font: { min: 10, max: 24} },
@@ -76,6 +76,12 @@ export class DataService {
   public static CAROUSEL_SIZE = 5
 
   public static regionDiameter = 200
+
+  public static GAP = 320
+
+  public static CAROUSEL_SCALE_1 = 1.7
+
+  public static CAROUSEL_SCALE_2 = 1.4
 
   public static getColor(g, weight = 0) {
     if(this.COLORS[g].length == 1) return this.COLORS[g][0];

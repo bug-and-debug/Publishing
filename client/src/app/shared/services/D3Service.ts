@@ -30,6 +30,18 @@ export class D3Service {
   	links: null,
     shapeRects: null
   };
+  articleElements: any = [
+    'article',
+    'articleImg',
+    'articleTitle',
+    'articleBody',
+    'articleLine',
+    'articleSiteImg',
+    'articleTextSite',
+    'articleTextTime',
+    'articleEditButton',
+    'articleTextMenu'
+  ];
   svg: any;
   svgContainer: any;
   zoom: any;
@@ -264,8 +276,8 @@ export class D3Service {
         .style("fill", (d:any) => d.style.color);
 
     this.svgElements.imgsArticle
-        .attr('width', (d:any) => d.style.height)
-        .attr('height', (d:any) => d.style.height - 250);
+        .attr('width', (d:any) => d.style.width)
+        .attr('height', (d:any) => d.style.height - 150);
 
     this.svgElements.ellipses
       .style("fill", (d:any) => d.style.color);
@@ -307,7 +319,8 @@ export class D3Service {
         .enter().append('rect')
         .attr('class', 'articleRect')
         .attr('stroke-width', 2)
-        .attr('stroke', '#c2c5c7')
+        //.attr('stroke', '#c2c5c7')
+        .attr('stroke', '#ff0000')
         .attr('id', (d:any) => 'article' + d.nodeData.nodeIndex)
         .attr('data-index', (d:any) => d.nodeData.nodeIndex)
         .attr('data-id', (d:any) => d._id);
@@ -329,22 +342,22 @@ export class D3Service {
         .enter().append('text')
         .attr('class', 'pointer articleTitle')
         .attr("dominant-baseline", "central")
-        .attr('id', (d:any) => 'articleText' + d.nodeData.nodeIndex)
+        .attr('id', (d:any) => 'articleTitle' + d.nodeData.nodeIndex)
         .attr('data-index', (d:any) => d.nodeData.nodeIndex)
         .attr('data-id', (d:any) => d._id);
     this.svgElements.tspansArticleTitle1 = this.svgElements.textsArticleTitle
           .append('tspan')
           .attr('x', 0)
-          .attr('dx', 10)
-          .attr('dy', 30)
-          .text((d:any) => d.title.substring(0,37))
+          .attr('dx', 6)
+          .attr('dy', 16)
+          .text((d:any) => d.title.substring(0,36))
           .attr('data-index', (d:any) => d.nodeData.nodeIndex);
     this.svgElements.tspansArticleTitle2 = this.svgElements.textsArticleTitle
           .append('tspan')
           .attr('x', 0)
-          .attr('dx', 10)
-          .attr('dy', 60)
-          .text((d:any) => _.truncate(d.title.substring(37), {'length': 37}))
+          .attr('dx', 6)
+          .attr('dy', 32)
+          .text((d:any) => _.truncate(d.title.substring(36), {'length': 36}))
           .attr('data-index', (d:any) => d.nodeData.nodeIndex);
     this.svgElements.textsArticleBody = this.svg.append('g')
         .datum(this.nodes.filter(d=> d.shape == 'article'))
@@ -353,38 +366,30 @@ export class D3Service {
         .enter().append('text')
         .attr('class', 'articleBody')
         .attr("dominant-baseline", "central")
-        .attr('id', (d:any) => 'articleText' + d.nodeData.nodeIndex)
+        .attr('id', (d:any) => 'articleBody' + d.nodeData.nodeIndex)
         .attr('data-index', (d:any) => d.nodeData.nodeIndex)
         .attr('data-id', (d:any) => d._id);
     this.svgElements.tspansArticleBody1 = this.svgElements.textsArticleBody
           .append('tspan')
           .attr('x', 0)
-          .attr('dx', 10)
+          .attr('dx', 6)
           .attr('dy', 15)
           .text((d:any) => d.body.substring(0,55))
           .attr('data-index', (d:any) => d.nodeData.nodeIndex);
     this.svgElements.tspansArticleBody2 = this.svgElements.textsArticleBody
           .append('tspan')
           .attr('x', 0)
-          .attr('dx', 10)
-          .attr('dy', 36)
+          .attr('dx', 6)
+          .attr('dy', 30)
           .text((d:any) => d.body.substring(55, 110))
           .attr('data-index', (d:any) => d.nodeData.nodeIndex);
 
     this.svgElements.tspansArticleBody3 = this.svgElements.textsArticleBody
           .append('tspan')
           .attr('x', 0)
-          .attr('dx', 10)
-          .attr('dy', 57)
+          .attr('dx', 6)
+          .attr('dy', 45)
           .text((d:any) => d.body.substring(110, 165))
-          .attr('data-index', (d:any) => d.nodeData.nodeIndex);
-
-    this.svgElements.tspansArticleBody4 = this.svgElements.textsArticleBody
-          .append('tspan')
-          .attr('x', 0)
-          .attr('dx', 10)
-          .attr('dy', 78)
-          .text((d:any) => _.truncate(d.body.substring(165), {'length': 55}))
           .attr('data-index', (d:any) => d.nodeData.nodeIndex);
 
     this.svgElements.linesArticle = this.svg.append('g')
@@ -409,8 +414,8 @@ export class D3Service {
         .attr('id', (d:any) => 'articleSiteImg' + d.nodeData.nodeIndex)
         .attr('data-index', (d:any) => d.nodeData.nodeIndex)
         .attr('data-id', (d:any) => d._id)
-        .attr('width', 34)
-        .attr('height', 34);
+        .attr('width', 29)
+        .attr('height', 29);
 
     this.svgElements.textsArticleSite = this.svg.append('g')
         .datum(this.nodes.filter(d=> d.shape == 'article'))
@@ -431,7 +436,7 @@ export class D3Service {
         .data((d:any) => d)
         .enter().append('text')
         .attr('class', 'articleTime')
-        .attr("text-anchor", "end")
+        .attr("text-anchor", "left")
         .attr("dominant-baseline", "middle")
         .attr('id', (d:any) => 'articleTextTime' + d.nodeData.nodeIndex)
         .attr('data-index', (d:any) => d.nodeData.nodeIndex)
@@ -666,160 +671,145 @@ export class D3Service {
         }
       }
 
-      this.nodes[nodeIndex].x = offset_from_center * 620
+      this.nodes[nodeIndex].x = offset_from_center * DataService.GAP
     })
 
     this.updateArticlePosition()
-
     this.listeners.article_navigate.func.call(this.listeners.article_navigate.context, this.currentArticleIndex)
   }
 
+  centerArticleZIndex(center, prev, next) {
+    this.articleElements.forEach(element => {
+      console.log('__________ element ____________')
+      console.log(element + prev)
+      document.getElementById(element + prev).parentNode.appendChild(document.getElementById(element + prev));
+      document.getElementById(element + next).parentNode.appendChild(document.getElementById(element + next));
+      document.getElementById(element + center).parentNode.appendChild(document.getElementById(element + center));
+    })
+  }
+
+  centerArticleScaling(element, that) {
+    if (that.currentArticleIndex === undefined) that.currentArticleIndex = 0
+    let articleIndices = Object.keys(that.collisionNodes)
+    let centerArticle = articleIndices[that.currentArticleIndex]
+    let prev_centerArticle = articleIndices[that.currentArticleIndex > 0 ? that.currentArticleIndex -1 : articleIndices.length -1]
+    let next_centerArticle = articleIndices[that.currentArticleIndex < (articleIndices.length-1) ? that.currentArticleIndex +1 : 0]
+
+    that.centerArticleZIndex(centerArticle, prev_centerArticle, next_centerArticle)
+    element.attr('transform', (d: any) => {
+      if (d.nodeData.nodeIndex == centerArticle) {
+        return 'scale(' + DataService.CAROUSEL_SCALE_1 + ') translate(-62, -62)'
+      }
+      else  if (d.nodeData.nodeIndex == prev_centerArticle || d.nodeData.nodeIndex == next_centerArticle)
+        return 'scale(' + DataService.CAROUSEL_SCALE_2 + ') translate(-42, -42)'
+      else
+        return 'scale(1.0)'
+    })
+  }
+
   updateArticlePosition(animation:boolean = true) {
-    let t = animation ? 1500 : 0
+    let articleWidth = DataService.SIZES.g0.width
+    let articleHeight = DataService.SIZES.g0.height
+    let that = this
+    let t = animation ? 1000 : 0
+
     this.svgElements.articles
           .transition()
           .attr('x', (d:any) => d.x)
           .attr('y', (d:any) => d.y)
+          .call(this.centerArticleScaling, that)
           .duration(t)
     this.svgElements.imgsArticle
           .transition()
-          .attr('x', (d:any) => d.x+1)
-          .attr('y', (d:any) => d.y+1)
+          .attr('x', (d:any) => d.x)
+          .attr('y', (d:any) => d.y)
+          .call(this.centerArticleScaling, that)
           .duration(t)
     this.svgElements.textsArticleTitle
           .transition()
           .attr('x', (d:any) => d.x)
           .attr('y', (d:any) => d.y)
+          .call(this.centerArticleScaling, that)
           .duration(t)
     this.svgElements.tspansArticleTitle1
           .transition()
           .attr('x', (d:any) => d.x)
-          .attr('y', (d:any) => d.y + 250)
+          .attr('y', (d:any) => d.y + 150)
+          .call(this.centerArticleScaling, that)
           .duration(t)
     this.svgElements.tspansArticleTitle2
           .transition()
           .attr('x', (d:any) => d.x)
-          .attr('y', (d:any) => d.y + 250)
+          .attr('y', (d:any) => d.y + 150)
+          .call(this.centerArticleScaling, that)
           .duration(t)
     this.svgElements.textsArticleBody
           .transition()
           .attr('x', (d:any) => d.x)
           .attr('y', (d:any) => d.y + 40)
+          .call(this.centerArticleScaling, that)
           .duration(t)
     this.svgElements.tspansArticleBody1
           .transition()
           .attr('x', (d:any) => d.x)
-          .attr('y', (d:any) => d.y + 330)
+          .attr('y', (d:any) => d.y + 190)
+          .call(this.centerArticleScaling, that)
           .duration(t)
     this.svgElements.tspansArticleBody2
           .transition()
           .attr('x', (d:any) => d.x)
-          .attr('y', (d:any) => d.y + 330)
+          .attr('y', (d:any) => d.y + 190)
+          .call(this.centerArticleScaling, that)
           .duration(t)
     this.svgElements.tspansArticleBody3
           .transition()
           .attr('x', (d:any) => d.x)
-          .attr('y', (d:any) => d.y + 330)
+          .attr('y', (d:any) => d.y + 190)
+          .call(this.centerArticleScaling, that)
           .duration(t)
-    this.svgElements.tspansArticleBody4
-          .transition()
-          .attr('x', (d:any) => d.x)
-          .attr('y', (d:any) => d.y + 330)
-          .duration(t)
+
     this.svgElements.linesArticle
           .transition()
           .attr('x1', (d:any) => d.x)
-          .attr('y1', (d:any) => d.y + d.style.height - 50)
+          .attr('y1', (d:any) => d.y + d.style.height - 40)
           .attr('x2', (d:any) => d.x + d.style.width)
-          .attr('y2', (d:any) => d.y + d.style.height - 50)
+          .attr('y2', (d:any) => d.y + d.style.height - 40)
+          .call(this.centerArticleScaling, that)
           .duration(t)
     this.svgElements.imgsArticleSite
           .transition()
-          .attr('x', (d:any) => d.x + 8)
-          .attr('y', (d:any) => d.y + d.style.height - 42)
+          .attr('x', (d:any) => d.x + 4)
+          .attr('y', (d:any) => d.y + d.style.height - 36)
+          .call(this.centerArticleScaling, that)
           .duration(t)
     this.svgElements.textsArticleSite
           .transition()
-          .attr('x', (d:any) => d.x + 50)
-          .attr('y', (d:any) => d.y + d.style.height - 16)
+          .attr('x', (d:any) => d.x + 40)
+          .attr('y', (d:any) => d.y + d.style.height - 10)
+          .call(this.centerArticleScaling, that)
           .duration(t)
     this.svgElements.textsArticleTime
           .transition()
-          .attr('x', (d:any) => d.x + d.style.width - 190)
-          .attr('y', (d:any) => d.y + d.style.height - 16)
+          .attr('x', (d:any) => d.x + 40)
+          .attr('y', (d:any) => d.y + d.style.height - 28)
+          .call(this.centerArticleScaling, that)
           .duration(t)
     this.svgElements.editLinksArticle
           .transition()
-          .attr('x', (d:any) => d.x + d.style.width - 50)
-          .attr('y', (d:any) => d.y + d.style.height - 16)
+          .attr('x', (d:any) => d.x + d.style.width - 35)
+          .attr('y', (d:any) => d.y + d.style.height - 13)
+          .call(this.centerArticleScaling, that)
           .duration(t)
     this.svgElements.textsArticleMenu
           .transition()
-          .attr('x', (d:any) => d.x + d.style.width - 15)
-          .attr('y', (d:any) => d.y + d.style.height - 25)
+          .attr('x', (d:any) => d.x + d.style.width - 8)
+          .attr('y', (d:any) => d.y + d.style.height - 20)
+          .call(this.centerArticleScaling, that)
           .duration(t)
   }
 
   ticked () {
     this.collide(1)
-
-    // this.svgElements.links
-    // 			.attr('x1', (d:any) => d.x + d.style.width/2 )
-    // 			.attr('y1', (d:any) => d.y + d.style.height/2 )
-    // 			.attr('x2', (d:any) => { let p=this.parentOfElement(d); return p.x + p.style.width /2; })
-    // 			.attr('y2', (d:any) => { let p=this.parentOfElement(d); return p.y + p.style.height /2; });
-    // this.svgElements.articles
-    //       .attr('x', (d:any) => d.x)
-    //       .attr('y', (d:any) => d.y);
-    // this.svgElements.imgsArticle
-    //       .attr('x', (d:any) => d.x+1)
-    //       .attr('y', (d:any) => d.y+1);
-    // this.svgElements.textsArticleTitle
-    //       .attr('x', (d:any) => d.x)
-    //       .attr('y', (d:any) => d.y);
-    // this.svgElements.tspansArticleTitle1
-    //       .attr('x', (d:any) => d.x)
-    //       .attr('y', (d:any) => d.y + 250);
-    // this.svgElements.tspansArticleTitle2
-    //       .attr('x', (d:any) => d.x)
-    //       .attr('y', (d:any) => d.y + 250);
-    // this.svgElements.textsArticleBody
-    //       .attr('x', (d:any) => d.x)
-    //       .attr('y', (d:any) => d.y + 40);
-    // this.svgElements.tspansArticleBody1
-    //       .attr('x', (d:any) => d.x)
-    //       .attr('y', (d:any) => d.y + 330);
-    // this.svgElements.tspansArticleBody2
-    //       .attr('x', (d:any) => d.x)
-    //       .attr('y', (d:any) => d.y + 330);
-    // this.svgElements.tspansArticleBody3
-    //       .attr('x', (d:any) => d.x)
-    //       .attr('y', (d:any) => d.y + 330);
-    // this.svgElements.tspansArticleBody4
-    //       .attr('x', (d:any) => d.x)
-    //       .attr('y', (d:any) => d.y + 330);
-    // this.svgElements.linesArticle
-    //       .attr('x1', (d:any) => d.x)
-    //       .attr('y1', (d:any) => d.y + d.style.height - 50)
-    //       .attr('x2', (d:any) => d.x + d.style.width)
-    //       .attr('y2', (d:any) => d.y + d.style.height - 50);
-    // this.svgElements.imgsArticleSite
-    //       .attr('x', (d:any) => d.x + 8)
-    //       .attr('y', (d:any) => d.y + d.style.height - 42);
-    // this.svgElements.textsArticleSite
-    //       .attr('x', (d:any) => d.x + 50)
-    //       .attr('y', (d:any) => d.y + d.style.height - 16);
-    // this.svgElements.textsArticleTime
-    //       .attr('x', (d:any) => d.x + d.style.width - 190)
-    //       .attr('y', (d:any) => d.y + d.style.height - 16);
-    // this.svgElements.editLinksArticle
-    //       .attr('x', (d:any) => d.x + d.style.width - 50)
-    //       .attr('y', (d:any) => d.y + d.style.height - 16);
-    // this.svgElements.textsArticleMenu
-    //       .attr('x', (d:any) => d.x + d.style.width - 15)
-    //       .attr('y', (d:any) => d.y + d.style.height - 25);
-
-
     this.svgElements.ellipses
     			.attr('rx', (d:any) => d.style.width/2)
           .attr('ry', (d:any) => d.style.height/2)
