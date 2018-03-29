@@ -1,7 +1,7 @@
 var path = require('path');
 
 var protocol = process.env.SITE_PROTOCOL || 'http';
-var port = process.env.SITE_PORT || process.env.PORT || 4000;
+var port = process.env.SITE_PORT || process.env.PORT || 4100;
 
 module.exports = {
 
