@@ -12,6 +12,7 @@ import { TagInputModule } from 'ngx-chips';
 
 import { AppComponent } from '../modules/layout/app.component';
 import { HeaderComponent } from '../modules/layout/header.component';
+import { FooterComponent } from '../modules/layout/footer.component';
 import { ToolbarComponent } from '../modules/layout/toolbar.component';
 import { GroupAutoCompleteSelector } from '../shared/components/groupAutoCompleteSelector.component';
 import { LandingComponent } from '../modules/landing/landing.component';
@@ -52,7 +53,7 @@ export function provideSocialLoginConfig() {
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent, ToolbarComponent, GroupAutoCompleteSelector,
+    HeaderComponent, FooterComponent, ToolbarComponent, GroupAutoCompleteSelector,
     LandingComponent, ArticleAgreeDialog, ArticleFormDialog, ArticleGroupSelectorDialog,
     ConfirmDialog,
     ArticleViewComponent,

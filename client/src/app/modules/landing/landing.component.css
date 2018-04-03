@@ -1,9 +1,7 @@
-
-
-
 .column {
   margin: 0px;
   flex: 1 1 50%;
+  display: inline-flex;
 }
 .user {
   font-size: 40px;
@@ -33,8 +31,8 @@
   position: absolute;
   right: 8px;
   left: auto;
-  top: auto;
-  bottom: 10px;
+  top: 70px;
+  bottom: auto;
   margin-right: 8px;
 }
 .ads-btn{
@@ -116,12 +114,6 @@
   margin-left: 18px;
 }
 
-
-
-
-
-
-
 .article_container {
   position: absolute;
   background: #fff;
@@ -130,4 +122,9 @@
   right: 0;
   bottom: 0;
   z-index: 10;
+}
+
+.ads-left {
+  background-color: #aaa;
+  width: 250px;
 }

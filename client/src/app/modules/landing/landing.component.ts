@@ -177,7 +177,7 @@ export class LandingComponent {
       height = window.innerHeight;
     }
     this.svgSize.width = width;
-    this.svgSize.height = height - 100;
+    this.svgSize.height = height - 240;
 
     this.d3Service.resize(this.svgSize);
   }

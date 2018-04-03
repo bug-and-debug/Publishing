@@ -1,6 +1,9 @@
 <layout-toolbar [filter]="query" [pageId]="pageId" (onFilterChanged)="onFilterChanged(filter)"></layout-toolbar>
 
 <div class="column" (window:resize)="onResize($event)">
+	<div class="ads-left">
+
+	</div>
 	<div id="svg" [style.width.px]="svgSize.width" [style.height.px]="svgSize.height" (click)='toggleOffAll()'>
 	</div>
 </div>

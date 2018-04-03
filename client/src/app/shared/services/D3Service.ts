@@ -172,6 +172,7 @@ export class D3Service {
   }
 
   translateView() {
+    console.log('_________ transform k: ' + this.transform.k)
     let x = this.transform.x + (0 - this.centralOffset.width * this.transform.k)
     let y = this.transform.y + (0 - this.centralOffset.height * this.transform.k)
     this.svg.attr("transform", 'translate(' + x + ',' + y + ') scale(' + this.transform.k + ')');
@@ -628,17 +629,7 @@ export class D3Service {
 
   viewNextArticle(direction /* boolean: true - next, false - prev) */) {
     if(this.isInTransition) return;
-    // let currentArticleIndex = 0;
-    // let x0 = 0 - this.transform.x - this.width / 2 * this.transform.k,      x1 = x0 + this.width * this.transform.k,
-    //     y0 = 0 - this.transform.y - this.height / 2 * this.transform.k,     y1 = y0 + this.height * this.transform.k
     let articleIndices = Object.keys(this.collisionNodes)
-    // for(let i=0; i<articleIndices.length; i++) {
-    //   let article = this.nodes[articleIndices[i]]
-    //   if(article.x >= x0 && article.x <= x1 && article.y >= y0 && article.y <= y1) {
-    //     currentArticleIndex = i
-    //     break
-    //   }
-    // }
     this.currentArticleIndex = this.currentArticleIndex + (direction ? 1 : -1)
     if(this.currentArticleIndex < 0) this.currentArticleIndex = this.currentArticleIndex = articleIndices.length - 1
     if(this.currentArticleIndex >= articleIndices.length) this.currentArticleIndex = 0

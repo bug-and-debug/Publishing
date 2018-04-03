@@ -66,8 +66,6 @@ export class AuthService {
 
 	subscribe(callback) {
 		this._auth.authState.subscribe((user) => {
-			console.log('____________________ strange ________________________')
-			console.log(user)
 			// try to login
 			if(user != null) {
 				this.loadingSpinnerService.show();
